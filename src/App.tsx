@@ -436,11 +436,9 @@ export default function App() {
             <div>
               <div className="eyebrow">Request Access</div>
               <h3>Enter your details and request an invite.</h3>
-              <p style={{ marginTop: "24px", maxWidth: "560px" }}>
-                This form can later be linked to Google Forms, Typeform or your
-                email. For now, it gives you the exact structure for your
-                landing page.
-              </p>
+             <p style={{ marginTop: "24px", maxWidth: "560px" }}>
+Request access to the next CLIQUE event. Limited spots available.
+</p>
             </div>
 
             <form className="form">
