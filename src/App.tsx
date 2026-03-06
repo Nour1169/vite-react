@@ -441,26 +441,45 @@ Request access to the next CLIQUE event. Limited spots available.
 </p>
             </div>
 
-            <form className="form">
-              <input className="input" type="text" placeholder="Full name" />
-              <input
-                className="input"
-                type="email"
-                placeholder="Email address"
-              />
-              <input
-                className="input"
-                type="text"
-                placeholder="Instagram handle"
-              />
-              <textarea
-                className="textarea"
-                placeholder="Why would you like to join Clique?"
-              />
-              <button className="form-button" type="button">
-                Request Invite
-              </button>
-            </form>
+          <form className="form" action="https://api.web3forms.com/submit" method="POST">
+  <input type="hidden" name="access_key" value="a12099ca-d298-46b6-84cb-4a3f52aea946" />
+  <input type="hidden" name="subject" value="Nieuwe aanvraag via Clique Antwerp" />
+  <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} />
+
+  <input
+    className="input"
+    type="text"
+    name="name"
+    placeholder="Full name"
+    required
+  />
+
+  <input
+    className="input"
+    type="email"
+    name="email"
+    placeholder="Email address"
+    required
+  />
+
+  <input
+    className="input"
+    type="text"
+    name="instagram"
+    placeholder="Instagram handle"
+  />
+
+  <textarea
+    className="textarea"
+    name="message"
+    placeholder="Why would you like to join Clique?"
+    required
+  />
+
+  <button className="form-button" type="submit">
+    Request Invite
+  </button>
+</form>
           </section>
         </div>
 
