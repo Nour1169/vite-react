@@ -1,328 +1,895 @@
-export default function CliqueStreetHomepage() {
-  return (
-    <div className="min-h-screen bg-[#0a0a0a] text-white selection:bg-white selection:text-black">
-      <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clique Antwerp</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0a;
+      --panel: #121212;
+      --soft: #181818;
+      --line: rgba(255, 255, 255, 0.12);
+      --text: #f5f5f5;
+      --muted: rgba(255, 255, 255, 0.68);
+      --muted-2: rgba(255, 255, 255, 0.5);
+      --cream: #f3efe9;
+      --black: #000000;
+      --white: #ffffff;
+    }
 
-        :root {
-          --bg: #0a0a0a;
-          --panel: #121212;
-          --soft: #1b1b1b;
-          --text: #f5f5f5;
-          --muted: #b8b8b8;
-          --line: rgba(255,255,255,0.14);
-          --cream: #f3efe9;
-        }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
-        * { box-sizing: border-box; }
-        html { scroll-behavior: smooth; }
-        body { background: var(--bg); }
+    html {
+      scroll-behavior: smooth;
+    }
 
-        .logo-font {
-          font-family: 'Fredoka', sans-serif;
-          font-weight: 700;
-          letter-spacing: 0.02em;
-        }
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 36px 36px;
+      overflow-x: hidden;
+    }
 
-        .body-font {
-          font-family: 'Inter', sans-serif;
-        }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
 
-        .blob-outline {
-          border: 3px solid white;
-          border-radius: 42% 58% 52% 48% / 41% 40% 60% 59%;
-        }
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
-        .soft-blob {
-          border-radius: 42% 58% 55% 45% / 43% 37% 63% 57%;
-        }
+    .logo-font {
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
 
-        .pill-outline {
-          border: 1.6px solid rgba(255,255,255,0.85);
-          border-radius: 999px;
-        }
+    .container {
+      width: min(1280px, calc(100% - 40px));
+      margin: 0 auto;
+    }
 
-        .grid-noise {
-          background-image:
-            linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
-          background-size: 36px 36px;
-        }
-      `}</style>
+    .page-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background:
+        radial-gradient(circle at top right, rgba(255,255,255,0.08), transparent 28%),
+        radial-gradient(circle at left, rgba(255,255,255,0.05), transparent 30%);
+      z-index: -1;
+    }
 
-      <div className="relative overflow-hidden grid-noise">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.08),transparent_28%),radial-gradient(circle_at_left,rgba(255,255,255,0.05),transparent_30%)]" />
+    .site-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      padding: 24px 0;
+    }
 
-        <header className="relative z-10 mx-auto flex max-w-7xl items-center justify-between px-5 py-5 sm:px-8 lg:px-10">
-          <a href="#top" className="inline-flex items-center gap-3">
-            <div className="flex h-11 w-11 items-center justify-center rounded-[15px] border border-white/20 bg-white text-black shadow-[0_0_30px_rgba(255,255,255,0.12)]">
-              <span className="logo-font text-2xl leading-none">C</span>
-            </div>
-            <div className="leading-tight">
-              <div className="logo-font text-2xl uppercase tracking-[0.12em] sm:text-3xl">Clique</div>
-              <div className="body-font text-[11px] uppercase tracking-[0.32em] text-white/55 sm:text-xs">social community antwerp</div>
-            </div>
-          </a>
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+    }
 
-          <nav className="hidden items-center gap-8 body-font md:flex">
-            <a href="#about" className="text-sm text-white/70 transition hover:text-white">About</a>
-            <a href="#events" className="text-sm text-white/70 transition hover:text-white">Events</a>
-            
-            <a href="#join" className="text-sm text-white/70 transition hover:text-white">Join</a>
-          </nav>
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 15px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: var(--white);
+      color: var(--black);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 30px rgba(255,255,255,0.12);
+      flex-shrink: 0;
+    }
 
-          <a
-            href="#join"
-            className="body-font inline-flex items-center justify-center rounded-full border border-white px-5 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-black"
-          >
-            Request Invite
-          </a>
-        </header>
+    .brand-icon span {
+      font-size: 1.6rem;
+      line-height: 1;
+    }
 
-        <main id="top" className="relative z-10 mx-auto max-w-7xl px-5 pb-16 pt-5 sm:px-8 lg:px-10 lg:pb-24 lg:pt-8">
-          <section className="grid items-center gap-10 lg:grid-cols-[1.18fr_0.82fr] lg:gap-14">
-            <div className="max-w-3xl">
-              <div className="body-font mb-5 inline-flex rounded-full border border-white/15 bg-white/5 px-4 py-2 text-xs font-medium uppercase tracking-[0.32em] text-white/70 backdrop-blur">
-                Antwerp • community • culture • movement
-              </div>
+    .brand-title {
+      font-size: clamp(1.7rem, 2vw, 2.2rem);
+      line-height: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
 
-              <h1 className="logo-font max-w-3xl text-[4rem] leading-[0.9] tracking-tight sm:text-[5.4rem] lg:text-[7rem]">
-                Join the
-                <span className="block text-white">Clique.</span>
-              </h1>
+    .brand-subtitle {
+      margin-top: 4px;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.55);
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+    }
 
-              <p className="body-font mt-6 max-w-2xl text-lg leading-8 text-white/72 sm:text-xl">
-                A new generation social community in Antwerp. Built around runs, curated gatherings, music, creative energy and people who actually want to connect.
-              </p>
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
 
-              <div className="mt-8 flex flex-wrap gap-4">
-                <a
-                  href="#join"
-                  className="body-font inline-flex items-center justify-center rounded-full bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:-translate-y-0.5"
-                >
-                  Join the community
-                </a>
-                <a
-                  href="#events"
-                  className="body-font inline-flex items-center justify-center rounded-full border border-white/80 px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:bg-white hover:text-black"
-                >
-                  See the vibe
-                </a>
-              </div>
+    .nav a {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.72);
+      transition: 0.2s ease;
+    }
 
-              <div className="mt-10 grid max-w-2xl grid-cols-1 gap-4 sm:grid-cols-3">
-                {[
-                  ['Runs + socials', 'Street-energy meetups'],
-                  ['Invite-based', 'Curated but warm'],
-                  ['Antwerp first', 'Local people, real vibe'],
-                ].map(([title, desc]) => (
-                  <div key={title} className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 backdrop-blur-sm">
-                    <div className="body-font text-sm font-semibold uppercase tracking-[0.18em] text-white">{title}</div>
-                    <div className="body-font mt-2 text-sm leading-6 text-white/60">{desc}</div>
-                  </div>
-                ))}
-              </div>
-            </div>
+    .nav a:hover {
+      color: var(--white);
+    }
 
-            <div className="relative mx-auto w-full max-w-[520px] lg:max-w-none">
-              <div className="absolute -left-3 top-8 h-28 w-28 rounded-full border border-white/15 bg-white/5 blur-[1px]" />
-              <div className="absolute -right-2 bottom-14 h-20 w-20 rounded-full border border-white/10 bg-white/5" />
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 999px;
+      padding: 15px 28px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      transition: 0.2s ease;
+      cursor: pointer;
+      border: none;
+    }
 
-              <div className="rounded-[34px] border border-white/10 bg-[#f4efe8] p-4 shadow-[0_35px_120px_rgba(0,0,0,0.45)] sm:p-5">
-                <div className="relative overflow-hidden rounded-[30px] bg-black p-6 sm:p-8">
-                  <div className="absolute right-4 top-4 rounded-full border border-white/15 bg-white/5 px-3 py-1 text-[10px] uppercase tracking-[0.28em] text-white/65 body-font">
-                    launch drop
-                  </div>
+    .btn:hover {
+      transform: translateY(-2px);
+    }
 
-                  <div className="blob-outline mx-auto mt-3 w-full max-w-[360px] bg-black px-6 py-8 text-center sm:px-8 sm:py-10">
-                    <div className="logo-font text-[4.2rem] leading-none text-white sm:text-[5.5rem]">clique</div>
-                    <div className="body-font mt-2 text-lg font-extrabold lowercase tracking-tight text-white sm:text-2xl">
-                      social community
-                    </div>
-                    <div className="body-font text-2xl font-black tracking-tight text-white sm:text-4xl">
-                      Antwerp
-                    </div>
-                  </div>
+    .btn-primary {
+      background: var(--white);
+      color: var(--black);
+    }
 
-                  <div className="mt-8 rounded-[26px] border border-white/10 bg-white/[0.04] p-5 text-white">
-                    <div className="body-font text-xs uppercase tracking-[0.32em] text-white/55">What Clique feels like</div>
-                    <p className="mt-4 logo-font text-3xl leading-[1.05] sm:text-[2.9rem]">
-                      More community.
-                      <span className="block">Less classic.</span>
-                    </p>
-                    <p className="body-font mt-4 text-base leading-7 text-white/68">
-                      Designed for a playful, bold and street-inspired identity that matches the new logo instead of a luxury editorial look.
-                    </p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 1px solid rgba(255,255,255,0.85);
+    }
 
-          <section id="about" className="mt-16 grid gap-5 md:grid-cols-3 lg:mt-24">
-            {[
-              {
-                kicker: 'community first',
-                title: 'Not just events',
-                text: 'Clique is a recurring social world. People come for a run, stay for the atmosphere and return for the people.',
-              },
-              {
-                kicker: 'street-inspired',
-                title: 'Rounded, bold, playful',
-                text: 'The design language uses softer shapes, strong type and high-contrast black and white to mirror the logo.',
-              },
-              {
-                kicker: 'young Antwerp',
-                title: 'Built for real connection',
-                text: 'Creative people, ambitious people, sporty people and social people all in one scene, without feeling too formal.',
-              },
-            ].map((card) => (
-              <article key={card.title} className="soft-blob border border-white/10 bg-white/[0.035] p-7 shadow-[0_20px_60px_rgba(0,0,0,0.2)]">
-                <div className="body-font text-[11px] uppercase tracking-[0.3em] text-white/50">{card.kicker}</div>
-                <h2 className="logo-font mt-4 text-3xl leading-tight">{card.title}</h2>
-                <p className="body-font mt-4 text-base leading-7 text-white/65">{card.text}</p>
-              </article>
-            ))}
-          </section>
+    .hero {
+      display: grid;
+      grid-template-columns: 1.18fr 0.82fr;
+      gap: 56px;
+      align-items: center;
+      padding: 10px 0 30px;
+    }
 
-          <section id="events" className="mt-16 lg:mt-24">
-            <div className="mb-6 flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-end">
-              <div>
-                <div className="body-font text-xs uppercase tracking-[0.32em] text-white/50">Event formats</div>
-                <h2 className="logo-font mt-3 text-4xl sm:text-5xl">How Clique shows up</h2>
-              </div>
-              <div className="body-font max-w-xl text-sm leading-6 text-white/60">
-                Social runs, café meetups, rooftop moments, creative collabs and invite-only gatherings that feel curated but never stiff.
-              </div>
-            </div>
+    .eyebrow {
+      display: inline-flex;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      backdrop-filter: blur(6px);
+      margin-bottom: 20px;
+    }
 
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4">
-              {[
-                ['Clique Run — First Event', 'Our first community run in Antwerp. Tap here to see the event and join the run.', '#first-run'],
-                ['Community Nights', 'Music, conversation, visuals and a room full of good energy.', '#'],
-                ['Creative Drops', 'Brand moments, collaborations, content and limited access reveals.', '#'],
-                ['Secret Unlocks', 'QR-based invites, hidden pages and members-only access moments.', '#'],
-              ].map(([title, text, href], index) => (
-                <a key={title} href={href} className="group relative overflow-hidden rounded-[30px] border border-white/10 bg-[#111111] p-6 transition hover:-translate-y-1 hover:border-white/20 hover:bg-[#151515]">
-                  <div className="body-font mb-10 text-6xl font-black text-white/10">0{index + 1}</div>
-                  <h3 className="logo-font text-3xl">{title}</h3>
-                  <p className="body-font mt-3 text-base leading-7 text-white/65">{text}</p>
-                  {title === 'Clique Run — First Event' && (
-                    <div className="body-font mt-5 inline-flex items-center rounded-full border border-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-[0.18em] text-white/85 transition group-hover:bg-white group-hover:text-black">
-                      Open event page
-                    </div>
-                  )}
-                </a>
-              ))}
-            </div>
-          </section>
+    .hero h1 {
+      font-size: clamp(4rem, 9vw, 7rem);
+      line-height: 0.92;
+      letter-spacing: -0.03em;
+    }
 
-          <section id="first-run" className="mt-16 lg:mt-24">
-            <div className="overflow-hidden rounded-[38px] border border-white/10 bg-[#f3efe9] p-5 text-black shadow-[0_35px_120px_rgba(0,0,0,0.35)] sm:p-6">
-              <div className="grid gap-6 rounded-[30px] bg-black p-6 text-white sm:p-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-start">
-                <div>
-                  <div className="body-font text-xs uppercase tracking-[0.32em] text-white/50">First running event</div>
-                  <h2 className="logo-font mt-3 text-4xl leading-tight sm:text-5xl">Clique Run #01</h2>
-                  <p className="body-font mt-4 max-w-2xl text-base leading-8 text-white/70">
-                    Our first community run in Antwerp. Easy energy, good people, a social pace and a strong first moment for the Clique community.
-                  </p>
+    .hero p {
+      margin-top: 24px;
+      max-width: 760px;
+      font-size: 1.2rem;
+      line-height: 1.8;
+      color: var(--muted);
+    }
 
-                  <div className="mt-8 grid gap-4 sm:grid-cols-3">
-                    {[
-                      ['Date', 'Sunday — 10:30'],
-                      ['Location', 'Antwerp Zuid'],
-                      ['Pace', 'Social / all levels'],
-                    ].map(([label, value]) => (
-                      <div key={label} className="rounded-[24px] border border-white/10 bg-white/[0.04] p-5">
-                        <div className="body-font text-[11px] uppercase tracking-[0.28em] text-white/45">{label}</div>
-                        <div className="logo-font mt-3 text-2xl leading-tight">{value}</div>
-                      </div>
-                    ))}
-                  </div>
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 32px;
+    }
 
-                  <div className="mt-8 flex flex-wrap gap-3">
-                    <a href="#join" className="body-font inline-flex items-center justify-center rounded-full bg-white px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-black transition hover:-translate-y-0.5">
-                      Join this run
-                    </a>
-                    
-                  </div>
-                </div>
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+      max-width: 760px;
+    }
 
-                <div className="rounded-[28px] border border-white/10 bg-white/[0.04] p-5 sm:p-6">
-                  <div className="body-font text-xs uppercase tracking-[0.32em] text-white/50">What to expect</div>
-                  <div className="mt-5 space-y-4">
-                    {[
-                      'Warm welcome and easy social check-in before the start',
-                      'A community-first run built for meeting people naturally',
-                      'Post-run coffee, content moments and a relaxed hangout vibe',
-                      'Potential QR unlocks, hidden drops or invite-only extras after attendance',
-                    ].map((item) => (
-                      <div key={item} className="flex items-start gap-3 rounded-2xl border border-white/10 bg-black/20 p-4">
-                        <div className="mt-1 h-2.5 w-2.5 rounded-full bg-white" />
-                        <p className="body-font text-sm leading-6 text-white/74">{item}</p>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
+    .mini-card,
+    .about-card,
+    .event-card,
+    .expect-card,
+    .detail-card,
+    .join-wrap {
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.04);
+    }
 
-          
+    .mini-card {
+      border-radius: 28px;
+      padding: 20px;
+    }
 
-          
+    .mini-card h3 {
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      margin-bottom: 8px;
+    }
 
-          <section id="join" className="mt-16 pb-10 lg:mt-24">
-            <div className="overflow-hidden rounded-[38px] border border-white/10 bg-white text-black shadow-[0_30px_120px_rgba(255,255,255,0.08)]">
-              <div className="grid gap-10 p-7 sm:p-10 lg:grid-cols-2 lg:p-12">
-                <div>
-                  <div className="body-font text-xs uppercase tracking-[0.32em] text-black/45">Request access</div>
-                  <h2 className="logo-font mt-3 text-4xl leading-tight sm:text-5xl">Join the Clique run.</h2>
-                  <p className="body-font mt-4 max-w-xl text-base leading-8 text-black/70">
-                    Enter your details and request access to the next Clique event. Limited spots available.
-                  </p>
-                </div>
+    .mini-card p {
+      margin-top: 0;
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.6);
+    }
 
-                <form className="flex flex-col gap-4" action="https://api.web3forms.com/submit" method="POST">
-                  <input type="hidden" name="access_key" value="a12099ca-d298-46b6-84cb-4a3f52aea946" />
-                  <input type="hidden" name="subject" value="Nieuwe aanvraag via Clique Antwerp" />
-                  <input type="checkbox" name="botcheck" style={{ display: 'none' }} />
+    .hero-visual {
+      position: relative;
+    }
 
-                  <input
-                    className="w-full rounded-full border border-black/20 px-5 py-3"
-                    type="text"
-                    name="name"
-                    placeholder="Full name"
-                    required
-                  />
+    .hero-dot,
+    .hero-dot-2 {
+      position: absolute;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.15);
+    }
 
-                  <input
-                    className="w-full rounded-full border border-black/20 px-5 py-3"
-                    type="email"
-                    name="email"
-                    placeholder="Email address"
-                    required
-                  />
+    .hero-dot {
+      width: 112px;
+      height: 112px;
+      top: 26px;
+      left: -12px;
+    }
 
-                  <input
-                    className="w-full rounded-full border border-black/20 px-5 py-3"
-                    type="text"
-                    name="instagram"
-                    placeholder="Instagram (optional)"
-                  />
+    .hero-dot-2 {
+      width: 80px;
+      height: 80px;
+      bottom: 50px;
+      right: -8px;
+      border-color: rgba(255,255,255,0.1);
+    }
 
-                  <button
-                    type="submit"
-                    className="mt-2 rounded-full bg-black px-7 py-4 text-sm font-semibold uppercase tracking-[0.18em] text-white transition hover:-translate-y-0.5"
-                  >
-                    Request invite
-                  </button>
-                </form>
-              </div>
-            </div>
-          </section>
-        </main>
+    .hero-frame {
+      background: #f4efe8;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 34px;
+      padding: 20px;
+      box-shadow: 0 35px 120px rgba(0,0,0,0.45);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-panel {
+      position: relative;
+      overflow: hidden;
+      background: var(--black);
+      border-radius: 30px;
+      padding: 32px;
+    }
+
+    .hero-launch {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.65);
+      padding: 7px 12px;
+      font-size: 0.64rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+    }
+
+    .blob-outline {
+      margin: 12px auto 0;
+      max-width: 360px;
+      background: var(--black);
+      border: 3px solid var(--white);
+      border-radius: 42% 58% 52% 48% / 41% 40% 60% 59%;
+      padding: 34px 26px;
+      text-align: center;
+    }
+
+    .blob-outline .big {
+      font-size: clamp(4.1rem, 8vw, 5.5rem);
+      line-height: 0.95;
+    }
+
+    .blob-outline .mid {
+      margin-top: 10px;
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      font-weight: 800;
+      line-height: 1.1;
+    }
+
+    .blob-outline .small {
+      font-size: clamp(1.8rem, 4vw, 3.2rem);
+      font-weight: 800;
+      line-height: 1.05;
+    }
+
+    .feels-card {
+      margin-top: 32px;
+      border-radius: 26px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(255,255,255,0.04);
+      padding: 20px;
+    }
+
+    .section {
+      margin-top: 88px;
+    }
+
+    .section-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: end;
+      gap: 24px;
+      margin-bottom: 24px;
+    }
+
+    .section-kicker {
+      font-size: 0.74rem;
+      text-transform: uppercase;
+      letter-spacing: 0.32em;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 12px;
+    }
+
+    .section h2 {
+      font-size: clamp(2.7rem, 5vw, 4rem);
+      line-height: 1;
+    }
+
+    .section-copy {
+      max-width: 520px;
+      color: rgba(255,255,255,0.6);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+
+    .about-card {
+      border-radius: 42% 58% 55% 45% / 43% 37% 63% 57%;
+      padding: 30px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+
+    .about-card .kicker {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.3em;
+      color: rgba(255,255,255,0.5);
+    }
+
+    .about-card h3 {
+      margin-top: 16px;
+      font-size: 2rem;
+      line-height: 1.1;
+    }
+
+    .about-card p {
+      margin-top: 16px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+
+    .events-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+
+    .event-card {
+      border-radius: 30px;
+      padding: 24px;
+      background: #111111;
+      transition: 0.2s ease;
+      display: block;
+    }
+
+    .event-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255,255,255,0.2);
+      background: #151515;
+    }
+
+    .event-number {
+      margin-bottom: 40px;
+      font-size: 3.8rem;
+      font-weight: 900;
+      color: rgba(255,255,255,0.1);
+      line-height: 1;
+    }
+
+    .event-card h3 {
+      font-size: 2rem;
+      line-height: 1.05;
+    }
+
+    .event-card p {
+      margin-top: 12px;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.8;
+    }
+
+    .event-pill {
+      display: inline-flex;
+      align-items: center;
+      margin-top: 20px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(255,255,255,0.15);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      transition: 0.2s ease;
+    }
+
+    .event-card:hover .event-pill {
+      background: var(--white);
+      color: var(--black);
+    }
+
+    .run-shell {
+      background: var(--cream);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 38px;
+      padding: 24px;
+      color: var(--black);
+      box-shadow: 0 35px 120px rgba(0,0,0,0.35);
+    }
+
+    .run-inner {
+      background: var(--black);
+      color: var(--white);
+      border-radius: 30px;
+      padding: 32px;
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 24px;
+    }
+
+    .run-inner p {
+      color: rgba(255,255,255,0.7);
+      line-height: 1.8;
+      font-size: 1rem;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .detail-card {
+      border-radius: 24px;
+      padding: 20px;
+    }
+
+    .detail-label {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.28em;
+      color: rgba(255,255,255,0.45);
+    }
+
+    .detail-value {
+      margin-top: 14px;
+      font-size: clamp(1.8rem, 3vw, 2.7rem);
+      line-height: 1.12;
+    }
+
+    .run-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+    }
+
+    .expect-card {
+      border-radius: 28px;
+      padding: 24px;
+    }
+
+    .expect-list {
+      margin-top: 20px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .expect-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.1);
+      background: rgba(0,0,0,0.2);
+      padding: 16px;
+    }
+
+    .expect-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: var(--white);
+      margin-top: 7px;
+      flex-shrink: 0;
+    }
+
+    .expect-item p {
+      color: rgba(255,255,255,0.74);
+      font-size: 0.95rem;
+      line-height: 1.7;
+    }
+
+    .join-wrap {
+      border-radius: 38px;
+      background: var(--white);
+      color: var(--black);
+      padding: 30px;
+      box-shadow: 0 30px 120px rgba(255,255,255,0.08);
+    }
+
+    .join-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 36px;
+      align-items: start;
+    }
+
+    .join-wrap p {
+      color: rgba(0,0,0,0.7);
+      line-height: 1.8;
+      font-size: 1rem;
+      max-width: 540px;
+    }
+
+    .join-form {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .join-form input {
+      width: 100%;
+      border-radius: 999px;
+      border: 1px solid rgba(0,0,0,0.2);
+      background: var(--white);
+      color: var(--black);
+      padding: 15px 20px;
+      font-size: 1rem;
+      font-family: 'Inter', sans-serif;
+      outline: none;
+    }
+
+    .join-form input:focus {
+      border-color: rgba(0,0,0,0.5);
+    }
+
+    .join-form button {
+      margin-top: 4px;
+    }
+
+    .mobile-nav-toggle {
+      display: none;
+    }
+
+    @media (max-width: 1120px) {
+      .hero,
+      .run-inner,
+      .join-grid,
+      .events-grid,
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .events-grid .event-card:last-child,
+      .events-grid .event-card:nth-child(3) {
+        display: none;
+      }
+    }
+
+    @media (max-width: 860px) {
+      .site-header {
+        flex-wrap: wrap;
+      }
+
+      .nav {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        flex-wrap: wrap;
+        gap: 18px;
+      }
+
+      .hero,
+      .run-inner,
+      .join-grid,
+      .about-grid,
+      .events-grid,
+      .detail-grid,
+      .mini-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-head {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero-frame,
+      .run-shell,
+      .join-wrap {
+        padding: 18px;
+      }
+
+      .hero-panel,
+      .run-inner {
+        padding: 24px;
+      }
+
+      .brand-subtitle {
+        letter-spacing: 0.2em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-bg"></div>
+
+  <header class="container site-header">
+    <a class="brand" href="#top">
+      <div class="brand-icon"><span class="logo-font">C</span></div>
+      <div>
+        <div class="logo-font brand-title">Clique</div>
+        <div class="brand-subtitle">social community antwerp</div>
       </div>
-    </div>
-  );
-}
+    </a>
+
+    <nav class="nav">
+      <a href="#about">About</a>
+      <a href="#events">Events</a>
+      <a href="#join">Join</a>
+    </nav>
+
+    <a href="#join" class="btn btn-outline">Request Invite</a>
+  </header>
+
+  <main id="top" class="container">
+    <section class="hero">
+      <div>
+        <div class="eyebrow">Antwerp • community • culture • movement</div>
+
+        <h1 class="logo-font">Join the<br>Clique.</h1>
+
+        <p>
+          A new generation social community in Antwerp. Built around runs, curated gatherings, music, creative energy and people who actually want to connect.
+        </p>
+
+        <div class="hero-actions">
+          <a href="#join" class="btn btn-primary">Join the community</a>
+          <a href="#events" class="btn btn-outline">See the vibe</a>
+        </div>
+
+        <div class="mini-grid">
+          <div class="mini-card">
+            <h3>Runs + socials</h3>
+            <p>Street-energy meetups</p>
+          </div>
+          <div class="mini-card">
+            <h3>Invite-based</h3>
+            <p>Curated but warm</p>
+          </div>
+          <div class="mini-card">
+            <h3>Antwerp first</h3>
+            <p>Local people, real vibe</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-visual">
+        <div class="hero-dot"></div>
+        <div class="hero-dot-2"></div>
+
+        <div class="hero-frame">
+          <div class="hero-panel">
+            <div class="hero-launch">launch drop</div>
+
+            <div class="blob-outline">
+              <div class="logo-font big">clique</div>
+              <div class="mid">social community</div>
+              <div class="small">Antwerp</div>
+            </div>
+
+            <div class="feels-card">
+              <div class="section-kicker" style="margin-bottom: 10px; color: rgba(255,255,255,0.55);">What Clique feels like</div>
+              <div class="logo-font" style="font-size: clamp(2rem, 4vw, 3rem); line-height: 1.05;">More community.<br>Less classic.</div>
+              <p style="margin-top: 16px; color: rgba(255,255,255,0.68); font-size: 1rem; line-height: 1.8;">
+                Designed for a playful, bold and street-inspired identity that matches the new logo instead of a luxury editorial look.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" class="section">
+      <div class="about-grid">
+        <article class="about-card">
+          <div class="kicker">community first</div>
+          <h3 class="logo-font">Not just events</h3>
+          <p>Clique is a recurring social world. People come for a run, stay for the atmosphere and return for the people.</p>
+        </article>
+
+        <article class="about-card">
+          <div class="kicker">street-inspired</div>
+          <h3 class="logo-font">Rounded, bold, playful</h3>
+          <p>The design language uses softer shapes, strong type and high-contrast black and white to mirror the logo.</p>
+        </article>
+
+        <article class="about-card">
+          <div class="kicker">young Antwerp</div>
+          <h3 class="logo-font">Built for real connection</h3>
+          <p>Creative people, ambitious people, sporty people and social people all in one scene, without feeling too formal.</p>
+        </article>
+      </div>
+    </section>
+
+    <section id="events" class="section">
+      <div class="section-head">
+        <div>
+          <div class="section-kicker">Event formats</div>
+          <h2 class="logo-font">How Clique shows up</h2>
+        </div>
+        <div class="section-copy">
+          Social runs, café meetups, rooftop moments and creative collabs that feel curated but never stiff.
+        </div>
+      </div>
+
+      <div class="events-grid">
+        <a href="#first-run" class="event-card">
+          <div class="event-number">01</div>
+          <h3 class="logo-font">Clique Run — First Event</h3>
+          <p>Our first community run in Antwerp. Tap here to see the event and join the run.</p>
+          <div class="event-pill">Open event page</div>
+        </a>
+
+        <div class="event-card">
+          <div class="event-number">02</div>
+          <h3 class="logo-font">Community Nights</h3>
+          <p>Music, conversation, visuals and a room full of good energy.</p>
+        </div>
+
+        <div class="event-card">
+          <div class="event-number">03</div>
+          <h3 class="logo-font">Creative Drops</h3>
+          <p>Brand moments, collaborations, content and limited access reveals.</p>
+        </div>
+
+        <div class="event-card">
+          <div class="event-number">04</div>
+          <h3 class="logo-font">City Gatherings</h3>
+          <p>Casual moments across Antwerp designed around vibe, people and place.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="first-run" class="section">
+      <div class="run-shell">
+        <div class="run-inner">
+          <div>
+            <div class="section-kicker" style="color: rgba(255,255,255,0.5);">First running event</div>
+            <h2 class="logo-font">Clique Run #01</h2>
+            <p style="margin-top: 18px; max-width: 720px;">
+              Our first community run in Antwerp. Easy energy, good people, a social pace and a strong first moment for the Clique community.
+            </p>
+
+            <div class="detail-grid">
+              <div class="detail-card">
+                <div class="detail-label">Date</div>
+                <div class="logo-font detail-value">Sunday — 10:30</div>
+              </div>
+
+              <div class="detail-card">
+                <div class="detail-label">Location</div>
+                <div class="logo-font detail-value">Antwerp Zuid</div>
+              </div>
+
+              <div class="detail-card">
+                <div class="detail-label">Pace</div>
+                <div class="logo-font detail-value">Social / all levels</div>
+              </div>
+            </div>
+
+            <div class="run-actions">
+              <a href="#join" class="btn btn-primary">Join this run</a>
+            </div>
+          </div>
+
+          <div class="expect-card">
+            <div class="section-kicker" style="color: rgba(255,255,255,0.5); margin-bottom: 0;">What to expect</div>
+            <div class="expect-list">
+              <div class="expect-item">
+                <div class="expect-dot"></div>
+                <p>Warm welcome and easy social check-in before the start.</p>
+              </div>
+              <div class="expect-item">
+                <div class="expect-dot"></div>
+                <p>A community-first run built for meeting people naturally.</p>
+              </div>
+              <div class="expect-item">
+                <div class="expect-dot"></div>
+                <p>Post-run coffee, content moments and a relaxed hangout vibe.</p>
+              </div>
+              <div class="expect-item">
+                <div class="expect-dot"></div>
+                <p>Good energy, a strong first vibe and a real first moment for Clique.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="join" class="section" style="padding-bottom: 40px;">
+      <div class="join-wrap">
+        <div class="join-grid">
+          <div>
+            <div class="section-kicker" style="color: rgba(0,0,0,0.45);">Request access</div>
+            <h2 class="logo-font">Join the Clique run.</h2>
+            <p style="margin-top: 18px;">
+              Enter your details and request access to the next Clique event. Limited spots available.
+            </p>
+          </div>
+
+          <form class="join-form" action="https://api.web3forms.com/submit" method="POST">
+            <input type="hidden" name="access_key" value="a12099ca-d298-46b6-84cb-4a3f52aea946">
+            <input type="hidden" name="subject" value="Nieuwe aanvraag via Clique Antwerp">
+            <input type="checkbox" name="botcheck" style="display:none;">
+
+            <input type="text" name="name" placeholder="Full name" required>
+            <input type="email" name="email" placeholder="Email address" required>
+            <input type="text" name="instagram" placeholder="Instagram (optional)">
+
+            <button type="submit" class="btn" style="background: black; color: white;">Request invite</button>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
