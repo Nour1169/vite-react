@@ -79,7 +79,7 @@ export default function App() {
           grid-template-columns: 1fr 1fr;
           gap: 60px;
           align-items: center;
-          padding: padding: 10px 0 40px 0;
+          padding: padding: 8px 0 10px 0;
         }
 
         .hero h1 {
