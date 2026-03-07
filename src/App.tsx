@@ -250,4 +250,3 @@ Enter your details and request access to the next Clique moment.
 </div>
   )
 }
-      
