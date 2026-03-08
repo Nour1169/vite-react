@@ -1,27 +1,27 @@
 import React, { useEffect, useState } from "react";
 
 export default function App() {
-  const [entered, setEntered] = useState(false);
-  const [showQuote, setShowQuote] = useState(false);
-  const [showForm, setShowForm] = useState(false);
+  const [stage, setStage] = useState<"hidden" | "quote" | "form">("hidden");
 
   useEffect(() => {
-    let quoteTimer: number | undefined;
-    let formTimer: number | undefined;
+    let timer: number | undefined;
 
-    if (entered) {
-      quoteTimer = window.setTimeout(() => setShowQuote(true), 120);
-      formTimer = window.setTimeout(() => setShowForm(true), 850);
-    } else {
-      setShowQuote(false);
-      setShowForm(false);
+    if (stage === "quote") {
+      timer = window.setTimeout(() => {
+        setStage("form");
+      }, 1100);
     }
 
     return () => {
-      if (quoteTimer) window.clearTimeout(quoteTimer);
-      if (formTimer) window.clearTimeout(formTimer);
+      if (timer) window.clearTimeout(timer);
     };
-  }, [entered]);
+  }, [stage]);
+
+  const handleEnter = () => {
+    if (stage === "hidden") {
+      setStage("quote");
+    }
+  };
 
   return (
     <>
@@ -34,67 +34,59 @@ export default function App() {
 
         html, body, #root {
           margin: 0;
-          min-height: 100%;
           width: 100%;
+          min-height: 100%;
         }
 
         body {
-          font-family: 'Inter', sans-serif;
-          background: #05070b;
+          background: #040507;
           color: #ffffff;
+          font-family: 'Inter', sans-serif;
         }
 
         .page {
           min-height: 100vh;
           width: 100%;
-          background:
-            radial-gradient(circle at center, rgba(255,255,255,0.06) 0%, rgba(255,255,255,0.02) 18%, transparent 42%),
-            linear-gradient(180deg, #07101b 0%, #05070b 18%, #05070b 100%);
+          position: relative;
+          overflow: hidden;
           display: flex;
           align-items: center;
           justify-content: center;
-          padding: 24px 16px;
-          position: relative;
-          overflow: hidden;
-        }
-
-        .page::before,
-        .page::after {
-          content: '';
-          position: absolute;
-          left: 50%;
-          transform: translateX(-50%);
-          border-radius: 999px;
-          filter: blur(70px);
-          pointer-events: none;
+          background:
+            radial-gradient(circle at center, rgba(255,255,255,0.035) 0%, transparent 28%),
+            linear-gradient(180deg, #05070b 0%, #020304 100%);
         }
 
         .page::before {
-          top: 8%;
-          width: 340px;
-          height: 340px;
-          background: rgba(255,255,255,0.05);
+          content: "";
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle at 50% 42%, rgba(255,255,255,0.04), transparent 18%),
+            radial-gradient(circle at 50% 60%, rgba(255,255,255,0.02), transparent 26%);
+          pointer-events: none;
         }
 
-        .page::after {
-          bottom: 8%;
-          width: 280px;
-          height: 280px;
-          background: rgba(255,255,255,0.025);
-        }
-
-        .center-wrap {
+        .wrap {
           position: relative;
           z-index: 2;
           width: 100%;
+          padding: 24px 16px;
           display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
-          gap: 22px;
         }
 
-        .tap-button {
+        .hidden-stage {
+          width: 100%;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          position: relative;
+        }
+
+        .secret-button {
           appearance: none;
           border: 0;
           background: transparent;
@@ -103,116 +95,90 @@ export default function App() {
           display: flex;
           flex-direction: column;
           align-items: center;
-          gap: 22px;
+          gap: 18px;
+          transition: transform .25s ease;
         }
 
-        .logo-shell {
-          width: min(82vw, 360px);
-          aspect-ratio: 1 / 1;
+        .secret-button:hover {
+          transform: scale(1.02);
+        }
+
+        .secret-mark {
+          width: 16px;
+          height: 16px;
           border-radius: 999px;
-          background: radial-gradient(circle at 50% 35%, #0b0b0d 0%, #030303 58%, #000 100%);
-          border: 1px solid rgba(255,255,255,0.08);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.06), 0 40px 80px rgba(0,0,0,0.55), 0 0 40px rgba(255,255,255,0.06);
+          background: rgba(255,255,255,0.9);
+          box-shadow:
+            0 0 14px rgba(255,255,255,0.28),
+            0 0 34px rgba(255,255,255,0.12);
+          transition: transform .25s ease, opacity .25s ease;
+        }
+
+        .secret-button:hover .secret-mark {
+          transform: scale(1.15);
+        }
+
+        .secret-text {
+          font-family: 'Baloo 2', cursive;
+          font-size: 1rem;
+          letter-spacing: 0.16em;
+          text-transform: uppercase;
+          color: rgba(255,255,255,0.22);
+        }
+
+        .reveal-stage {
+          width: 100%;
+          min-height: 100vh;
           display: flex;
           align-items: center;
           justify-content: center;
-          position: relative;
-          transition: transform .3s ease, box-shadow .3s ease;
+          padding: 24px 16px;
         }
 
-        .logo-shell.small {
-          transform: scale(0.9);
+        .card {
+          width: min(92vw, 430px);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 20px;
+          animation: fadeUp .45s ease;
         }
 
-        .tap-button:hover .logo-shell {
-          transform: translateY(-3px);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.08), 0 46px 90px rgba(0,0,0,0.6), 0 0 54px rgba(255,255,255,0.08);
-        }
-
-        .logo-shell::before {
-          content: '';
-          position: absolute;
-          inset: 16px;
+        .mini-logo {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px 22px 10px;
+          border: 3px solid #fff;
           border-radius: 999px;
-          border: 1px dashed rgba(255,255,255,0.06);
-        }
-
-        .bubble-outline {
-          min-width: 76%;
           background: #000;
-          border: 4px solid #fff;
-          border-radius: 999px;
-          padding: 18px 24px 14px;
-          text-align: center;
-          position: relative;
           box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
+          position: relative;
         }
 
-        .bubble-outline::after {
-          content: '';
+        .mini-logo::after {
+          content: "";
           position: absolute;
-          bottom: -16px;
           left: 20%;
-          width: 52px;
-          height: 24px;
+          bottom: -12px;
+          width: 38px;
+          height: 18px;
           background: #000;
-          border-left: 4px solid #fff;
-          border-right: 4px solid #fff;
-          border-bottom: 4px solid #fff;
-          border-radius: 0 0 28px 28px;
+          border-left: 3px solid #fff;
+          border-right: 3px solid #fff;
+          border-bottom: 3px solid #fff;
+          border-radius: 0 0 20px 20px;
           transform: skewX(-30deg);
         }
 
-        .clique-word {
+        .logo-word {
           font-family: 'Baloo 2', cursive;
-          font-weight: 800;
-          letter-spacing: 0.02em;
+          font-size: clamp(2.5rem, 9vw, 3.4rem);
           line-height: 0.82;
-          color: #fff;
-        }
-
-        .logo-main {
-          font-size: clamp(3.2rem, 10vw, 4.2rem);
-          text-transform: lowercase;
-        }
-
-        .logo-sub {
-          margin-top: 8px;
-          font-size: clamp(0.72rem, 2vw, 0.84rem);
-          font-weight: 700;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          color: rgba(255,255,255,0.78);
-        }
-
-        .logo-city {
-          margin-top: 2px;
-          font-size: clamp(0.95rem, 2.8vw, 1.1rem);
           font-weight: 800;
           color: #fff;
-          line-height: 1;
-        }
-
-        .hint-pill {
-          border: 1px solid rgba(255,255,255,0.1);
-          background: rgba(255,255,255,0.035);
-          border-radius: 999px;
-          padding: 10px 16px;
-          color: rgba(255,255,255,0.7);
-          font-size: 0.75rem;
-          font-weight: 600;
-          letter-spacing: 0.28em;
-          text-transform: uppercase;
-          backdrop-filter: blur(8px);
-        }
-
-        .hint-text {
-          max-width: 280px;
-          text-align: center;
-          color: rgba(255,255,255,0.48);
-          font-size: 0.95rem;
-          line-height: 1.5;
-          margin: 0;
+          text-transform: lowercase;
+          letter-spacing: 0.02em;
         }
 
         .quote-wrap {
@@ -221,45 +187,45 @@ export default function App() {
           align-items: center;
           justify-content: center;
           text-align: center;
-          padding: 0 12px;
         }
 
         .quote {
+          margin: 0;
           font-family: 'Baloo 2', cursive;
-          font-size: clamp(2rem, 6vw, 3rem);
-          font-weight: 700;
+          font-size: clamp(1.8rem, 6vw, 2.5rem);
           line-height: 1.05;
           color: #fff;
           animation: fadeUp .4s ease;
-          margin: 0;
         }
 
         .form-panel {
-          width: min(92vw, 440px);
+          width: 100%;
           border-radius: 28px;
-          border: 1px solid rgba(255,255,255,0.16);
-          background: linear-gradient(180deg, rgba(14,18,25,0.92) 0%, rgba(7,9,13,0.96) 100%);
-          box-shadow: 0 30px 80px rgba(0,0,0,0.52), inset 0 1px 0 rgba(255,255,255,0.05);
-          padding: 20px;
+          border: 1px solid rgba(255,255,255,0.14);
+          background: linear-gradient(180deg, rgba(12,14,18,0.94) 0%, rgba(5,6,9,0.98) 100%);
+          box-shadow:
+            0 24px 70px rgba(0,0,0,0.52),
+            inset 0 1px 0 rgba(255,255,255,0.04);
+          padding: 22px;
           animation: fadeUp .45s ease;
         }
 
         .form-title {
-          font-family: 'Baloo 2', cursive;
-          font-size: clamp(1.85rem, 5vw, 2.1rem);
-          line-height: 1;
           margin: 0;
-          color: #fff;
           text-align: center;
+          font-family: 'Baloo 2', cursive;
+          font-size: clamp(1.6rem, 5vw, 2rem);
+          line-height: 1;
+          color: #fff;
         }
 
         .form-copy {
-          margin: 14px auto 0;
-          max-width: 340px;
+          margin: 12px auto 0;
+          max-width: 320px;
           text-align: center;
-          color: rgba(255,255,255,0.56);
           font-size: 0.95rem;
           line-height: 1.55;
+          color: rgba(255,255,255,0.56);
         }
 
         .form {
@@ -273,7 +239,7 @@ export default function App() {
           width: 100%;
           border-radius: 18px;
           border: 1px solid rgba(255,255,255,0.1);
-          background: rgba(255,255,255,0.03);
+          background: rgba(255,255,255,0.025);
           color: #fff;
           padding: 15px 16px;
           outline: none;
@@ -283,12 +249,12 @@ export default function App() {
         }
 
         .field::placeholder {
-          color: rgba(255,255,255,0.4);
+          color: rgba(255,255,255,0.34);
         }
 
         .field:focus {
-          border-color: rgba(255,255,255,0.22);
-          background: rgba(255,255,255,0.05);
+          border-color: rgba(255,255,255,0.2);
+          background: rgba(255,255,255,0.045);
           transform: translateY(-1px);
         }
 
@@ -298,19 +264,26 @@ export default function App() {
           border-radius: 999px;
           background: #fff;
           color: #000;
-          font-family: 'Baloo 2', cursive;
-          font-size: 1.12rem;
-          font-weight: 800;
-          letter-spacing: 0.03em;
           padding: 15px 20px;
           cursor: pointer;
+          font-family: 'Baloo 2', cursive;
+          font-size: 1.08rem;
+          font-weight: 800;
+          letter-spacing: 0.04em;
           transition: transform .25s ease, box-shadow .25s ease;
-          box-shadow: 0 12px 28px rgba(255,255,255,0.12);
+          box-shadow: 0 12px 28px rgba(255,255,255,0.1);
         }
 
         .cta:hover {
           transform: translateY(-2px);
-          box-shadow: 0 16px 34px rgba(255,255,255,0.16);
+          box-shadow: 0 16px 36px rgba(255,255,255,0.14);
+        }
+
+        .footer-note {
+          margin-top: 2px;
+          font-size: 0.9rem;
+          color: rgba(255,255,255,0.34);
+          text-align: center;
         }
 
         @keyframes fadeUp {
@@ -325,76 +298,71 @@ export default function App() {
         }
 
         @media (max-width: 640px) {
-          .bubble-outline {
-            min-width: 84%;
-            padding: 16px 18px 13px;
-            border-width: 3px;
+          .secret-text {
+            font-size: 0.92rem;
+            letter-spacing: 0.12em;
           }
 
-          .bubble-outline::after {
-            width: 44px;
-            height: 20px;
-            border-left-width: 3px;
-            border-right-width: 3px;
-            border-bottom-width: 3px;
-            bottom: -13px;
-          }
-
-          .logo-shell.small {
-            transform: scale(0.84);
+          .form-panel {
+            padding: 18px;
           }
         }
       `}</style>
 
       <main className="page">
-        <div className="center-wrap">
-          {!entered ? (
-            <button
-              className="tap-button"
-              onClick={() => setEntered(true)}
-              aria-label="Tap to enter Clique"
-              type="button"
-            >
-              <div className="logo-shell">
-                <div className="bubble-outline">
-                  <div className="clique-word logo-main">clique</div>
-                  <div className="logo-sub">social community</div>
-                  <div className="logo-city">Antwerp</div>
+        <div className="wrap">
+          {stage === "hidden" && (
+            <section className="hidden-stage">
+              <button
+                type="button"
+                className="secret-button"
+                onClick={handleEnter}
+                aria-label="Enter Clique"
+              >
+                <div className="secret-mark" />
+                <div className="secret-text">tap to enter</div>
+              </button>
+            </section>
+          )}
+
+          {stage !== "hidden" && (
+            <section className="reveal-stage">
+              <div className="card">
+                <div className="mini-logo">
+                  <div className="logo-word">clique</div>
                 </div>
-              </div>
 
-              <div className="hint-pill">tap to enter</div>
-              <p className="hint-text">a simple entrance to something worth finding</p>
-            </button>
-          ) : (
-            <section className="center-wrap">
-              <div className="logo-shell small">
-                <div className="bubble-outline">
-                  <div className="clique-word logo-main">clique</div>
-                  <div className="logo-sub">social community</div>
-                  <div className="logo-city">Antwerp</div>
+                <div className="quote-wrap">
+                  {stage === "quote" && (
+                    <p className="quote">you found the clique</p>
+                  )}
+                  {stage === "form" && (
+                    <p className="quote">not everyone finds the clique</p>
+                  )}
                 </div>
+
+                {stage === "form" && (
+                  <div className="form-panel">
+                    <h2 className="form-title">enter your details</h2>
+                    <p className="form-copy">
+                      leave your info and get first access to upcoming events, drops and invite-only moments.
+                    </p>
+
+                    <form className="form">
+                      <input className="field" type="text" placeholder="your name" />
+                      <input className="field" type="email" placeholder="your email" />
+                      <input className="field" type="text" placeholder="instagram @optional" />
+                      <button className="cta" type="submit">
+                        join the clique
+                      </button>
+                    </form>
+                  </div>
+                )}
+
+                {stage === "form" && (
+                  <div className="footer-note">Antwerp social community</div>
+                )}
               </div>
-
-              <div className="quote-wrap">
-                {showQuote && <p className="quote">not everyone finds the clique</p>}
-              </div>
-
-              {showForm && (
-                <div className="form-panel">
-                  <h2 className="form-title">enter your details</h2>
-                  <p className="form-copy">
-                    leave your info and be first to hear about upcoming drops, events and invite-only moments.
-                  </p>
-
-                  <form className="form">
-                    <input className="field" type="text" placeholder="your name" />
-                    <input className="field" type="email" placeholder="your email" />
-                    <input className="field" type="text" placeholder="instagram @optional" />
-                    <button className="cta" type="submit">join the clique</button>
-                  </form>
-                </div>
-              )}
             </section>
           )}
         </div>
@@ -402,3 +370,5 @@ export default function App() {
     </>
   );
 }
+
+
