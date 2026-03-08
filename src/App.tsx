@@ -400,11 +400,25 @@ export default function App() {
           }
         }
 
-        @media (max-width: 640px) {
-          .secret-text {
-            font-size: 0.92rem;
-            letter-spacing: 0.12em;
-          }
+       @media (max-width: 640px) {
+  .secret-text {
+    font-size: 0.92rem;
+    letter-spacing: 0.12em;
+  }
+
+  .form-panel {
+    padding: 18px;
+  }
+
+  .mini-logo {
+    min-width: 250px;
+    padding: 12px 22px 10px;
+  }
+
+  .logo-word {
+    font-size: clamp(2.7rem, 13vw, 3.5rem);
+  }
+}
 
           .form-panel {
             padding: 18px;
