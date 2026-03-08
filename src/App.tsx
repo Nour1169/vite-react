@@ -103,16 +103,17 @@ export default function App() {
           transform: scale(1.02);
         }
 
-        .secret-mark {
-          width: 16px;
-          height: 16px;
-          border-radius: 999px;
-          background: rgba(255,255,255,0.9);
-          box-shadow:
-            0 0 14px rgba(255,255,255,0.28),
-            0 0 34px rgba(255,255,255,0.12);
-          transition: transform .25s ease, opacity .25s ease;
-        }
+          .secret-mark {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.92);
+  box-shadow:
+    0 0 14px rgba(255,255,255,0.28),
+    0 0 34px rgba(255,255,255,0.12);
+  transition: transform .25s ease, opacity .25s ease;
+  animation: secretPulse 3.2s ease-in-out infinite;
+}
 
         .secret-button:hover .secret-mark {
           transform: scale(1.15);
