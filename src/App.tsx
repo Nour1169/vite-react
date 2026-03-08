@@ -104,8 +104,8 @@ export default function App() {
         }
 
           .secret-mark {
-  width: 16px;
-  height: 16px;
+  width: 18px;
+  height: 18px;
   border-radius: 999px;
   background: rgba(255,255,255,0.92);
   box-shadow:
