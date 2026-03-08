@@ -364,15 +364,14 @@ export default function App() {
                 </div>
 
                 <div className="quote-wrap">
-                  {stage === "quote" && (
-                    {stage === "quote" && (
-  <p className="quote">so... you found it</p>
-)}
-                  )}
-                  {stage === "form" && (
-                    <p className="quote">not everyone finds the clique</p>
-                  )}
-                </div>
+  {stage === "quote" && (
+    <p className="quote">so... you found it</p>
+  )}
+
+  {stage === "form" && (
+    <p className="quote">not everyone finds the clique</p>
+  )}
+</div>
 
                 {stage === "form" && (
                   <div className="form-panel">
