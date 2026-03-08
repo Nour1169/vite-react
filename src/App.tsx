@@ -78,7 +78,7 @@ export default function App() {
         }
 
         body {
-          background: #040507;
+          background: #000;
           color: #ffffff;
           font-family: 'Inter', sans-serif;
         }
@@ -93,7 +93,7 @@ export default function App() {
           justify-content: center;
           background:
             radial-gradient(circle at center, rgba(255,255,255,0.035) 0%, transparent 28%),
-            linear-gradient(180deg, #05070b 0%, #020304 100%);
+            linear-gradient(180deg, #000 0%, #000 100%);
         }
 
         .page::before {
