@@ -23,6 +23,8 @@ export default function App() {
   const handleEnter = () => {
     if (stage === "hidden") {
       setStage("quote");
+      setIsSubmitted(false);
+      setSubmitError("");
     }
   };
 
@@ -35,11 +37,7 @@ export default function App() {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    formData.append(
-      "access_key",
-      "a12099ca-d298-46b6-84cb-4a3f52aea946"
-    );
-
+    formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
     formData.append("subject", "Nieuwe aanvraag via Clique Antwerp");
     formData.append("from_name", "Clique Antwerp");
 
@@ -98,6 +96,16 @@ export default function App() {
             linear-gradient(180deg, #05070b 0%, #020304 100%);
         }
 
+        .page::before {
+          content: "";
+          position: absolute;
+          inset: 0;
+          background:
+            radial-gradient(circle at 50% 42%, rgba(255,255,255,0.04), transparent 18%),
+            radial-gradient(circle at 50% 60%, rgba(255,255,255,0.02), transparent 26%);
+          pointer-events: none;
+        }
+
         .wrap {
           position: relative;
           z-index: 2;
@@ -114,16 +122,24 @@ export default function App() {
           display: flex;
           align-items: center;
           justify-content: center;
+          position: relative;
         }
 
         .secret-button {
+          appearance: none;
           border: 0;
           background: transparent;
+          padding: 0;
           cursor: pointer;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 18px;
+          transition: transform .25s ease;
+        }
+
+        .secret-button:hover {
+          transform: scale(1.02);
         }
 
         .secret-mark {
@@ -131,7 +147,15 @@ export default function App() {
           height: 18px;
           border-radius: 999px;
           background: rgba(255,255,255,0.92);
+          box-shadow:
+            0 0 14px rgba(255,255,255,0.28),
+            0 0 34px rgba(255,255,255,0.12);
+          transition: transform .25s ease, opacity .25s ease;
           animation: secretPulse 3.2s ease-in-out infinite;
+        }
+
+        .secret-button:hover .secret-mark {
+          transform: scale(1.15);
         }
 
         .secret-text {
@@ -144,9 +168,12 @@ export default function App() {
         }
 
         .reveal-stage {
+          width: 100%;
+          min-height: 100vh;
           display: flex;
           align-items: center;
           justify-content: center;
+          padding: 24px 16px;
         }
 
         .card {
@@ -155,22 +182,91 @@ export default function App() {
           flex-direction: column;
           align-items: center;
           gap: 20px;
+          animation: fadeUp .45s ease;
+        }
+
+        .mini-logo {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px 22px 10px;
+          border: 3px solid #fff;
+          border-radius: 999px;
+          background: #000;
+          box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
+          position: relative;
+        }
+
+        .mini-logo::after {
+          content: "";
+          position: absolute;
+          left: 20%;
+          bottom: -12px;
+          width: 38px;
+          height: 18px;
+          background: #000;
+          border-left: 3px solid #fff;
+          border-right: 3px solid #fff;
+          border-bottom: 3px solid #fff;
+          border-radius: 0 0 20px 20px;
+          transform: skewX(-30deg);
         }
 
         .logo-word {
           font-family: 'Baloo 2', cursive;
-          font-size: 3rem;
+          font-size: clamp(2.5rem, 9vw, 3.4rem);
+          line-height: 0.82;
+          font-weight: 800;
+          color: #fff;
+          text-transform: lowercase;
+          letter-spacing: 0.02em;
+        }
+
+        .quote-wrap {
+          min-height: 72px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          text-align: center;
         }
 
         .quote {
+          margin: 0;
           font-family: 'Baloo 2', cursive;
-          font-size: 2rem;
-          text-align: center;
+          font-size: clamp(1.8rem, 6vw, 2.5rem);
+          line-height: 1.05;
+          color: #fff;
+          animation: fadeUp .4s ease;
         }
 
         .form-panel {
           width: 100%;
+          border-radius: 28px;
+          border: 1px solid rgba(255,255,255,0.14);
+          background: linear-gradient(180deg, rgba(12,14,18,0.94) 0%, rgba(5,6,9,0.98) 100%);
+          box-shadow:
+            0 24px 70px rgba(0,0,0,0.52),
+            inset 0 1px 0 rgba(255,255,255,0.04);
           padding: 22px;
+          animation: fadeUp .45s ease;
+        }
+
+        .form-title {
+          margin: 0;
+          text-align: center;
+          font-family: 'Baloo 2', cursive;
+          font-size: clamp(1.6rem, 5vw, 2rem);
+          line-height: 1;
+          color: #fff;
+        }
+
+        .form-copy {
+          margin: 12px auto 0;
+          max-width: 320px;
+          text-align: center;
+          font-size: 0.95rem;
+          line-height: 1.55;
+          color: rgba(255,255,255,0.56);
         }
 
         .form {
@@ -181,37 +277,121 @@ export default function App() {
         }
 
         .field {
-          padding: 14px;
-          border-radius: 16px;
+          width: 100%;
+          border-radius: 18px;
           border: 1px solid rgba(255,255,255,0.1);
-          background: rgba(255,255,255,0.03);
+          background: rgba(255,255,255,0.025);
           color: #fff;
+          padding: 15px 16px;
+          outline: none;
+          font-size: 0.98rem;
+          font-family: 'Inter', sans-serif;
+          transition: border-color .25s ease, background .25s ease, transform .25s ease;
+        }
+
+        .field::placeholder {
+          color: rgba(255,255,255,0.34);
+        }
+
+        .field:focus {
+          border-color: rgba(255,255,255,0.2);
+          background: rgba(255,255,255,0.045);
+          transform: translateY(-1px);
         }
 
         .cta {
+          width: 100%;
+          border: 1px solid rgba(255,255,255,0.16);
           border-radius: 999px;
           background: #fff;
           color: #000;
-          padding: 15px;
+          padding: 15px 20px;
           cursor: pointer;
+          font-family: 'Baloo 2', cursive;
+          font-size: 1.08rem;
+          font-weight: 800;
+          letter-spacing: 0.04em;
+          transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+          box-shadow: 0 12px 28px rgba(255,255,255,0.1);
+        }
+
+        .cta:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 16px 36px rgba(255,255,255,0.14);
+        }
+
+        .cta:disabled {
+          opacity: 0.7;
+          cursor: not-allowed;
         }
 
         .success-message {
+          margin-top: 8px;
           text-align: center;
-          margin-top: 10px;
+          font-size: 0.95rem;
           color: rgba(255,255,255,0.8);
+          font-family: 'Inter', sans-serif;
         }
 
         .error-message {
+          margin-top: 8px;
           text-align: center;
-          margin-top: 10px;
-          color: rgba(255,255,255,0.6);
+          font-size: 0.92rem;
+          color: rgba(255,255,255,0.58);
+          font-family: 'Inter', sans-serif;
+        }
+
+        .footer-note {
+          margin-top: 2px;
+          font-size: 0.9rem;
+          color: rgba(255,255,255,0.34);
+          text-align: center;
+        }
+
+        @keyframes fadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(18px) scale(0.985);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
         }
 
         @keyframes secretPulse {
-          0% {opacity:0.8}
-          50% {opacity:1}
-          100% {opacity:0.8}
+          0% {
+            box-shadow:
+              0 0 10px rgba(255,255,255,0.18),
+              0 0 22px rgba(255,255,255,0.08);
+            opacity: 0.82;
+          }
+
+          50% {
+            box-shadow:
+              0 0 18px rgba(255,255,255,0.38),
+              0 0 48px rgba(255,255,255,0.18),
+              0 0 82px rgba(255,255,255,0.08);
+            opacity: 1;
+          }
+
+          100% {
+            box-shadow:
+              0 0 10px rgba(255,255,255,0.18),
+              0 0 22px rgba(255,255,255,0.08);
+            opacity: 0.82;
+          }
+        }
+
+        @media (max-width: 640px) {
+          .secret-text {
+            font-size: 0.92rem;
+            letter-spacing: 0.12em;
+          }
+
+          .form-panel {
+            padding: 18px;
+          }
         }
       `}</style>
 
@@ -223,11 +403,10 @@ export default function App() {
                 type="button"
                 className="secret-button"
                 onClick={handleEnter}
+                aria-label="Enter Clique"
               >
                 <div className="secret-mark" />
-                <div className="secret-text">
-                  you're closer than you think
-                </div>
+                <div className="secret-text">you're closer than you think</div>
               </button>
             </section>
           )}
@@ -235,27 +414,31 @@ export default function App() {
           {stage !== "hidden" && (
             <section className="reveal-stage">
               <div className="card">
+                <div className="mini-logo">
+                  <div className="logo-word">clique</div>
+                </div>
 
-                <div className="logo-word">clique</div>
-
-                <div>
+                <div className="quote-wrap">
                   {stage === "quote" && (
                     <p className="quote">so… you found it</p>
                   )}
 
                   {stage === "form" && (
-                    <p className="quote">
-                      not everyone finds the clique
-                    </p>
+                    <p className="quote">not everyone finds the clique</p>
                   )}
                 </div>
 
                 {stage === "form" && (
                   <div className="form-panel">
-                    <form className="form" onSubmit={handleSubmit}>
+                    <h2 className="form-title">enter your details</h2>
+                    <p className="form-copy">
+                      leave your info and get first access to upcoming events, drops and invite-only moments.
+                    </p>
 
+                    <form className="form" onSubmit={handleSubmit}>
                       <input
                         className="field"
+                        type="text"
                         name="name"
                         placeholder="your name"
                         required
@@ -271,6 +454,7 @@ export default function App() {
 
                       <input
                         className="field"
+                        type="text"
                         name="instagram"
                         placeholder="instagram @optional"
                       />
@@ -281,28 +465,23 @@ export default function App() {
                         style={{ display: "none" }}
                       />
 
-                      <button
-                        className="cta"
-                        type="submit"
-                        disabled={isSubmitting}
-                      >
+                      <button className="cta" type="submit" disabled={isSubmitting}>
                         {isSubmitting ? "sending..." : "join the clique"}
                       </button>
 
                       {isSubmitted && (
-                        <p className="success-message">
-                          see you soon
-                        </p>
+                        <p className="success-message">see you soon</p>
                       )}
 
                       {submitError && (
-                        <p className="error-message">
-                          something went wrong
-                        </p>
+                        <p className="error-message">{submitError}</p>
                       )}
-
                     </form>
                   </div>
+                )}
+
+                {stage === "form" && (
+                  <div className="footer-note">Antwerp social community</div>
                 )}
               </div>
             </section>
