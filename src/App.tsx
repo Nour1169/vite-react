@@ -2,21 +2,29 @@ export default function App() {
   return (
     <div className="clique-site">
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap');
+        @font-face {
+          font-family: 'Synthemesc';
+          src:
+            url('/fonts/Synthemesc-Regular.woff2') format('woff2'),
+            url('/fonts/Synthemesc-Regular.woff') format('woff');
+          font-weight: 400;
+          font-style: normal;
+          font-display: swap;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
         :root {
           --bg: #0b0b0d;
-          --bg-soft: #111216;
-          --panel: rgba(255, 255, 255, 0.06);
-          --panel-2: rgba(255, 255, 255, 0.09);
-          --line: rgba(255, 255, 255, 0.14);
-          --line-soft: rgba(255, 255, 255, 0.08);
+          --bg-soft: #101115;
+          --panel: rgba(255, 255, 255, 0.045);
+          --line: rgba(255, 255, 255, 0.12);
           --text: #f5f2ec;
-          --muted: rgba(245, 242, 236, 0.76);
-          --muted-2: rgba(245, 242, 236, 0.56);
+          --muted: rgba(245, 242, 236, 0.74);
+          --muted-2: rgba(245, 242, 236, 0.54);
           --white: #f6f2eb;
           --black: #0c0c0f;
-          --shadow: 0 18px 60px rgba(0, 0, 0, 0.32);
+          --shadow: 0 14px 40px rgba(0, 0, 0, 0.24);
         }
 
         * {
@@ -32,9 +40,9 @@ export default function App() {
           font-family: 'Inter', sans-serif;
           color: var(--text);
           background:
-            radial-gradient(circle at top center, rgba(255,255,255,0.06), transparent 34%),
-            linear-gradient(rgba(255,255,255,0.035) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.035) 1px, transparent 1px),
+            radial-gradient(circle at top center, rgba(255,255,255,0.04), transparent 34%),
+            linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px),
             var(--bg);
           background-size: auto, 44px 44px, 44px 44px, auto;
           overflow-x: hidden;
@@ -60,7 +68,8 @@ export default function App() {
         }
 
         .logo-font {
-          font-family: 'Fredoka', sans-serif;
+          font-family: 'Synthemesc', 'Inter', sans-serif;
+          font-weight: 400;
         }
 
         .site-header {
@@ -68,7 +77,7 @@ export default function App() {
           align-items: center;
           justify-content: space-between;
           gap: 24px;
-          padding: 28px 0 24px;
+          padding: 28px 0 22px;
         }
 
         .brand {
@@ -88,14 +97,13 @@ export default function App() {
           align-items: center;
           justify-content: center;
           flex-shrink: 0;
-          box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+          box-shadow: 0 6px 18px rgba(0,0,0,0.14);
           border: 1px solid rgba(0,0,0,0.04);
         }
 
         .brand-badge span {
-          font-size: 1.9rem;
+          font-size: 1.75rem;
           line-height: 1;
-          font-weight: 700;
         }
 
         .brand-text {
@@ -103,9 +111,9 @@ export default function App() {
         }
 
         .brand-title {
-          font-size: 2rem;
+          font-size: 1.9rem;
           line-height: 1;
-          letter-spacing: -0.03em;
+          letter-spacing: -0.02em;
         }
 
         .brand-subtitle {
@@ -120,7 +128,7 @@ export default function App() {
         .nav {
           display: flex;
           align-items: center;
-          gap: 42px;
+          gap: 38px;
           color: var(--muted);
         }
 
@@ -154,48 +162,48 @@ export default function App() {
         }
 
         .header-cta {
-          padding: 18px 30px;
+          padding: 16px 28px;
           background: var(--white);
           color: var(--black);
-          box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+          box-shadow: 0 8px 20px rgba(0,0,0,0.14);
         }
 
         .hero {
           display: grid;
-          grid-template-columns: minmax(0, 1.1fr) minmax(360px, 0.9fr);
-          gap: 56px;
+          grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
+          gap: 52px;
           align-items: center;
-          padding: 22px 0 56px;
+          padding: 26px 0 52px;
         }
 
         .hero-title {
           margin: 0;
-          font-size: clamp(4rem, 8vw, 7.2rem);
-          line-height: 0.9;
-          letter-spacing: -0.05em;
-          max-width: 620px;
+          font-size: clamp(3.8rem, 7vw, 6.5rem);
+          line-height: 0.92;
+          letter-spacing: -0.04em;
+          max-width: 680px;
         }
 
         .hero-copy {
-          margin: 28px 0 0;
+          margin: 24px 0 0;
           max-width: 720px;
-          font-size: 1.3rem;
+          font-size: 1.18rem;
           line-height: 1.8;
           color: var(--muted);
         }
 
         .hero-actions {
-          margin-top: 34px;
+          margin-top: 30px;
           display: flex;
           flex-wrap: wrap;
-          gap: 18px;
+          gap: 16px;
         }
 
         .hero-actions .cta,
         .hero-actions .ghost {
-          min-width: 240px;
-          padding: 20px 30px;
-          font-size: 0.96rem;
+          min-width: 220px;
+          padding: 18px 28px;
+          font-size: 0.94rem;
         }
 
         .hero-actions .cta {
@@ -207,19 +215,19 @@ export default function App() {
         .hero-actions .ghost {
           background: transparent;
           color: var(--white);
-          border: 1px solid rgba(255,255,255,0.32);
+          border: 1px solid rgba(255,255,255,0.26);
         }
 
         .hero-art {
           position: relative;
-          min-height: 420px;
-          border-radius: 44px;
+          min-height: 400px;
+          border-radius: 36px;
           background:
-            radial-gradient(circle at 72% 35%, rgba(255,255,255,0.34), rgba(255,255,255,0.02) 36%, transparent 56%),
-            radial-gradient(circle at 32% 70%, rgba(255,255,255,0.1), transparent 42%),
-            linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.02)),
+            radial-gradient(circle at 70% 34%, rgba(255,255,255,0.22), rgba(255,255,255,0.02) 34%, transparent 54%),
+            radial-gradient(circle at 34% 70%, rgba(255,255,255,0.08), transparent 42%),
+            linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015)),
             var(--bg-soft);
-          border: 1px solid rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.06);
           overflow: hidden;
           box-shadow: var(--shadow);
         }
@@ -229,110 +237,109 @@ export default function App() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(circle, rgba(255,255,255,0.6) 1px, transparent 1.5px);
+            radial-gradient(circle, rgba(255,255,255,0.45) 1px, transparent 1.5px);
           background-size: 12px 12px;
           mask-image: radial-gradient(circle at 72% 30%, black 18%, transparent 62%);
-          opacity: 0.75;
+          opacity: 0.55;
         }
 
         .hero-blob {
           position: absolute;
-          right: -34px;
-          bottom: -18px;
-          width: 92%;
-          height: 92%;
+          right: -24px;
+          bottom: -10px;
+          width: 88%;
+          height: 88%;
           border-radius: 42% 58% 50% 50% / 34% 38% 62% 66%;
           background:
-            radial-gradient(circle at 70% 28%, rgba(255,255,255,0.68), rgba(255,255,255,0.16) 30%, transparent 52%),
-            linear-gradient(180deg, rgba(255,255,255,0.16), rgba(255,255,255,0.02)),
-            rgba(255,255,255,0.03);
-          filter: blur(0.2px);
+            radial-gradient(circle at 70% 28%, rgba(255,255,255,0.42), rgba(255,255,255,0.12) 30%, transparent 52%),
+            linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.015)),
+            rgba(255,255,255,0.025);
           transform: rotate(-8deg);
-          border: 1px solid rgba(255,255,255,0.08);
+          border: 1px solid rgba(255,255,255,0.06);
         }
 
         .section {
-          padding-top: 28px;
+          padding-top: 26px;
         }
 
         .divider {
           margin: 28px 0 34px;
           height: 1px;
-          background: linear-gradient(90deg, rgba(255,255,255,0.18), rgba(255,255,255,0.04));
+          background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
         }
 
         .section-title {
-          margin: 0 0 26px;
-          font-size: clamp(2.2rem, 4vw, 3.4rem);
+          margin: 0 0 24px;
+          font-size: clamp(2rem, 4vw, 3rem);
           line-height: 1;
-          letter-spacing: -0.04em;
+          letter-spacing: -0.03em;
         }
 
         .features {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 22px;
+          gap: 20px;
         }
 
         .feature {
           display: flex;
-          gap: 18px;
-          padding: 28px 24px;
-          border-radius: 26px;
-          background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.045));
-          border: 1px solid rgba(255,255,255,0.08);
-          box-shadow: inset 0 1px 0 rgba(255,255,255,0.05), var(--shadow);
+          gap: 16px;
+          padding: 24px 22px;
+          border-radius: 22px;
+          background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.028));
+          border: 1px solid rgba(255,255,255,0.06);
+          box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 10px 24px rgba(0,0,0,0.16);
         }
 
         .feature-icon {
-          width: 48px;
-          height: 48px;
+          width: 44px;
+          height: 44px;
           border-radius: 999px;
           flex-shrink: 0;
           display: flex;
           align-items: center;
           justify-content: center;
-          background: rgba(255,255,255,0.08);
-          border: 1px solid rgba(255,255,255,0.1);
-          font-size: 1.25rem;
+          background: rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.08);
+          font-size: 1.05rem;
         }
 
         .feature-number {
-          font-size: 0.78rem;
+          font-size: 0.76rem;
           letter-spacing: 0.1em;
           color: var(--muted-2);
           text-transform: uppercase;
         }
 
         .feature h3 {
-          margin: 6px 0 10px;
-          font-size: 1.75rem;
+          margin: 8px 0 10px;
+          font-size: 1.45rem;
           line-height: 1;
-          letter-spacing: -0.03em;
+          letter-spacing: -0.02em;
         }
 
         .feature p {
           margin: 0;
           color: var(--muted);
-          line-height: 1.75;
-          font-size: 1.02rem;
+          line-height: 1.7;
+          font-size: 0.98rem;
         }
 
         .join-section {
-          padding: 58px 0 72px;
+          padding: 54px 0 72px;
         }
 
         .join-title {
-          margin: 0 0 14px;
-          font-size: clamp(2.6rem, 4vw, 4rem);
+          margin: 0 0 12px;
+          font-size: clamp(2.4rem, 4vw, 3.6rem);
           line-height: 1;
-          letter-spacing: -0.05em;
+          letter-spacing: -0.04em;
         }
 
         .join-copy {
-          margin: 0 0 26px;
+          margin: 0 0 24px;
           max-width: 760px;
-          font-size: 1.18rem;
+          font-size: 1.08rem;
           line-height: 1.8;
           color: var(--muted);
         }
@@ -340,23 +347,23 @@ export default function App() {
         .steps {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
-          gap: 18px;
-          margin-bottom: 22px;
+          gap: 16px;
+          margin-bottom: 20px;
         }
 
         .step {
           display: flex;
           align-items: flex-start;
-          gap: 16px;
-          padding: 24px 20px;
-          border-radius: 22px;
-          background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.035));
-          border: 1px solid rgba(255,255,255,0.08);
+          gap: 14px;
+          padding: 22px 18px;
+          border-radius: 20px;
+          background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+          border: 1px solid rgba(255,255,255,0.06);
         }
 
         .step-index {
-          width: 42px;
-          height: 42px;
+          width: 40px;
+          height: 40px;
           border-radius: 999px;
           background: var(--white);
           color: var(--black);
@@ -368,16 +375,17 @@ export default function App() {
         }
 
         .step h4 {
-          margin: 2px 0 10px;
-          font-size: 1.5rem;
+          margin: 4px 0 10px;
+          font-size: 1.28rem;
           line-height: 1;
-          letter-spacing: -0.03em;
+          letter-spacing: -0.02em;
         }
 
         .step p {
           margin: 0;
           color: var(--muted);
-          line-height: 1.7;
+          line-height: 1.65;
+          font-size: 0.96rem;
         }
 
         .join-form-wrap {
@@ -385,21 +393,21 @@ export default function App() {
           grid-template-columns: 1fr 1fr auto;
           gap: 18px;
           align-items: center;
-          padding: 16px;
-          border-radius: 30px;
+          padding: 14px;
+          border-radius: 26px;
           background: var(--white);
           color: var(--black);
-          box-shadow: var(--shadow);
+          box-shadow: 0 14px 34px rgba(0,0,0,0.18);
         }
 
         .field {
           width: 100%;
           min-width: 0;
-          height: 64px;
+          height: 60px;
           border-radius: 999px;
           border: 1px solid rgba(0,0,0,0.08);
           background: rgba(0,0,0,0.02);
-          padding: 0 22px;
+          padding: 0 20px;
           color: var(--black);
           outline: none;
         }
@@ -412,7 +420,7 @@ export default function App() {
         .fields-stack {
           display: grid;
           grid-template-columns: 1fr 1fr;
-          gap: 14px;
+          gap: 12px;
           grid-column: span 2;
         }
 
@@ -421,28 +429,28 @@ export default function App() {
         }
 
         .submit-btn {
-          height: 64px;
-          padding: 0 34px;
+          height: 60px;
+          padding: 0 30px;
           background: var(--black);
           color: var(--white);
           white-space: nowrap;
-          min-width: 260px;
+          min-width: 230px;
         }
 
         .footer-note {
-          margin-top: 16px;
+          margin-top: 14px;
           color: var(--muted-2);
-          font-size: 0.95rem;
+          font-size: 0.92rem;
         }
 
         @media (max-width: 1024px) {
           .hero {
             grid-template-columns: 1fr;
-            gap: 30px;
+            gap: 28px;
           }
 
           .hero-art {
-            min-height: 320px;
+            min-height: 300px;
           }
 
           .features,
@@ -488,15 +496,15 @@ export default function App() {
           }
 
           .header-cta {
-            padding: 15px 22px;
+            padding: 14px 20px;
           }
 
           .hero-title {
-            font-size: clamp(3.3rem, 14vw, 5rem);
+            font-size: clamp(3rem, 14vw, 4.6rem);
           }
 
           .hero-copy {
-            font-size: 1.08rem;
+            font-size: 1rem;
           }
 
           .hero-actions .cta,
@@ -506,17 +514,17 @@ export default function App() {
 
           .feature,
           .step {
-            padding: 22px 18px;
+            padding: 20px 16px;
           }
 
           .join-form-wrap {
-            padding: 14px;
-            border-radius: 24px;
+            padding: 12px;
+            border-radius: 22px;
           }
 
           .field,
           .submit-btn {
-            height: 58px;
+            height: 56px;
           }
 
           .brand-subtitle {
