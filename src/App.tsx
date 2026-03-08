@@ -406,7 +406,7 @@ export default function App() {
                 aria-label="Enter Clique"
               >
                 <div className="secret-mark" />
-                <div className="secret-text">you're closer than you think</div>
+                <div className="secret-text">you're one clique away</div>
               </button>
             </section>
           )}
@@ -420,7 +420,7 @@ export default function App() {
 
                 <div className="quote-wrap">
                   {stage === "quote" && (
-                    <p className="quote">so… you found it</p>
+                    <p className="quote">so… you found us</p>
                   )}
 
                   {stage === "form" && (
