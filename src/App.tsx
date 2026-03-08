@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 export default function App() {
   const [stage, setStage] = useState<"hidden" | "quote" | "form">("hidden");
