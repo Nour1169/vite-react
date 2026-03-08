@@ -356,6 +356,18 @@ export default function App() {
           text-align: center;
         }
 
+        .logo-image-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo-image {
+  width: clamp(260px, 45vw, 420px);
+  height: auto;
+  display: block;
+}
+
         @keyframes fadeUp {
           from {
             opacity: 0;
@@ -401,16 +413,12 @@ export default function App() {
     padding: 18px;
   }
 
-  .clique-logo {
-  padding: 18px 26px 22px;
-}
-.clique-sub {
-  font-size: 0.85rem;
+  
+.logo-image {
+  width: clamp(220px, 70vw, 340px);
 }
 
-  .logo-word {
-    font-size: clamp(2.7rem, 13vw, 3.5rem);
-  }
+  
 }
 
           .form-panel {
@@ -439,13 +447,10 @@ export default function App() {
             <section className="reveal-stage">
               <div className="card">
                 <div className="clique-logo">
-  <div className="clique-title">clique</div>
-  <div className="clique-sub">
-    social community
-    <br/>
-    Antwerp
-  </div>
+                  <div className="logo-image-wrap">
+  <img src="/clique-logo.png" alt="Clique logo" className="logo-image" />
 </div>
+  
 
                 <div className="quote-wrap">
                   {stage === "quote" && (
