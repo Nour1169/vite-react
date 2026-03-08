@@ -184,56 +184,47 @@ export default function App() {
           gap: 20px;
           animation: fadeUp .45s ease;
         }
-.mini-logo {
-  display: inline-flex;
+
+.clique-logo {
+  display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 310px;
-  padding: 14px 30px 12px;
+  padding: 22px 36px 26px;
   border: 4px solid #fff;
-  border-radius: 999px;
+  border-radius: 120px 120px 140px 140px;
   background: #000;
   box-shadow:
     0 0 0 2px rgba(255,255,255,0.08),
     inset 0 1px 0 rgba(255,255,255,0.04);
+  text-align: center;
   position: relative;
-  overflow: visible;
 }
 
-.mini-logo::before {
-  content: "";
-  position: absolute;
-  inset: -2px;
-  border-radius: 999px;
-  box-shadow: 0 0 0 2px rgba(255,255,255,0.05);
-  pointer-events: none;
-}
-
-.mini-logo::after {
-  content: "";
-  position: absolute;
-  left: 21%;
-  bottom: -19px;
-  width: 62px;
-  height: 28px;
-  background: #000;
-  border-left: 4px solid #fff;
-  border-right: 4px solid #fff;
-  border-bottom: 4px solid #fff;
-  border-radius: 0 0 32px 32px;
-  transform: skewX(-32deg);
-}
-
-.logo-word {
+.clique-title {
   font-family: 'Baloo 2', cursive;
-  font-size: clamp(3.15rem, 10vw, 4.35rem);
-  line-height: 0.76;
+  font-size: clamp(3rem, 9vw, 4rem);
   font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.04em;
   color: #fff;
   text-transform: lowercase;
-  letter-spacing: -0.04em;
-  transform: scaleX(1.09);
 }
+
+.clique-sub {
+  margin-top: 10px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.15;
+  color: #fff;
+  opacity: 0.9;
+}
+
+
+
+
+
       
     
 
@@ -410,10 +401,12 @@ export default function App() {
     padding: 18px;
   }
 
-  .mini-logo {
-    min-width: 250px;
-    padding: 12px 22px 10px;
-  }
+  .clique-logo {
+  padding: 18px 26px 22px;
+}
+.clique-sub {
+  font-size: 0.85rem;
+}
 
   .logo-word {
     font-size: clamp(2.7rem, 13vw, 3.5rem);
@@ -445,9 +438,14 @@ export default function App() {
           {stage !== "hidden" && (
             <section className="reveal-stage">
               <div className="card">
-                <div className="mini-logo">
-                  <div className="logo-word">clique</div>
-                </div>
+                <div className="clique-logo">
+  <div className="clique-title">clique</div>
+  <div className="clique-sub">
+    social community
+    <br/>
+    Antwerp
+  </div>
+</div>
 
                 <div className="quote-wrap">
                   {stage === "quote" && (
