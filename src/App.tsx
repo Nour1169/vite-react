@@ -2,29 +2,20 @@ export default function App() {
   return (
     <div className="clique-site">
       <style>{`
-        @font-face {
-          font-family: 'Synthemesc';
-          src:
-            url('/fonts/Synthemesc-Regular.woff2') format('woff2'),
-            url('/fonts/Synthemesc-Regular.woff') format('woff');
-          font-weight: 400;
-          font-style: normal;
-          font-display: swap;
-        }
-
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap');
 
         :root {
           --bg: #0b0b0d;
-          --bg-soft: #101115;
+          --bg-soft: #111216;
           --panel: rgba(255, 255, 255, 0.045);
+          --panel-2: rgba(255, 255, 255, 0.08);
           --line: rgba(255, 255, 255, 0.12);
           --text: #f5f2ec;
-          --muted: rgba(245, 242, 236, 0.74);
-          --muted-2: rgba(245, 242, 236, 0.54);
+          --muted: rgba(245, 242, 236, 0.76);
+          --muted-2: rgba(245, 242, 236, 0.56);
           --white: #f6f2eb;
           --black: #0c0c0f;
-          --shadow: 0 14px 40px rgba(0, 0, 0, 0.24);
+          --shadow: 0 16px 48px rgba(0, 0, 0, 0.26);
         }
 
         * {
@@ -40,9 +31,9 @@ export default function App() {
           font-family: 'Inter', sans-serif;
           color: var(--text);
           background:
-            radial-gradient(circle at top center, rgba(255,255,255,0.04), transparent 34%),
-            linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(255,255,255,0.028) 1px, transparent 1px),
+            radial-gradient(circle at top center, rgba(255,255,255,0.05), transparent 34%),
+            linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px),
             var(--bg);
           background-size: auto, 44px 44px, 44px 44px, auto;
           overflow-x: hidden;
@@ -68,8 +59,7 @@ export default function App() {
         }
 
         .logo-font {
-          font-family: 'Synthemesc', 'Inter', sans-serif;
-          font-weight: 400;
+          font-family: 'Baloo 2', cursive;
         }
 
         .site-header {
@@ -102,8 +92,9 @@ export default function App() {
         }
 
         .brand-badge span {
-          font-size: 1.75rem;
+          font-size: 1.8rem;
           line-height: 1;
+          font-weight: 800;
         }
 
         .brand-text {
@@ -111,7 +102,7 @@ export default function App() {
         }
 
         .brand-title {
-          font-size: 1.9rem;
+          font-size: 2rem;
           line-height: 1;
           letter-spacing: -0.02em;
         }
@@ -170,25 +161,38 @@ export default function App() {
 
         .hero {
           display: grid;
-          grid-template-columns: minmax(0, 1.08fr) minmax(360px, 0.92fr);
-          gap: 52px;
+          grid-template-columns: minmax(0, 1.06fr) minmax(320px, 0.94fr);
+          gap: 48px;
           align-items: center;
-          padding: 26px 0 52px;
+          padding: 34px 0 56px;
+        }
+
+        .hero-tag {
+          display: inline-flex;
+          align-items: center;
+          padding: 10px 16px;
+          border-radius: 999px;
+          background: rgba(255,255,255,0.05);
+          border: 1px solid rgba(255,255,255,0.08);
+          color: var(--muted);
+          font-size: 0.78rem;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
         }
 
         .hero-title {
-          margin: 0;
-          font-size: clamp(3.8rem, 7vw, 6.5rem);
+          margin: 18px 0 0;
+          font-size: clamp(3.8rem, 7.4vw, 6.4rem);
           line-height: 0.92;
           letter-spacing: -0.04em;
-          max-width: 680px;
+          max-width: 700px;
         }
 
         .hero-copy {
-          margin: 24px 0 0;
+          margin: 22px 0 0;
           max-width: 720px;
-          font-size: 1.18rem;
-          line-height: 1.8;
+          font-size: 1.14rem;
+          line-height: 1.82;
           color: var(--muted);
         }
 
@@ -203,7 +207,7 @@ export default function App() {
         .hero-actions .ghost {
           min-width: 220px;
           padding: 18px 28px;
-          font-size: 0.94rem;
+          font-size: 0.92rem;
         }
 
         .hero-actions .cta {
@@ -215,17 +219,17 @@ export default function App() {
         .hero-actions .ghost {
           background: transparent;
           color: var(--white);
-          border: 1px solid rgba(255,255,255,0.26);
+          border: 1px solid rgba(255,255,255,0.24);
         }
 
         .hero-art {
           position: relative;
-          min-height: 400px;
-          border-radius: 36px;
+          min-height: 380px;
+          border-radius: 34px;
           background:
-            radial-gradient(circle at 70% 34%, rgba(255,255,255,0.22), rgba(255,255,255,0.02) 34%, transparent 54%),
+            radial-gradient(circle at 70% 32%, rgba(255,255,255,0.18), rgba(255,255,255,0.02) 34%, transparent 54%),
             radial-gradient(circle at 34% 70%, rgba(255,255,255,0.08), transparent 42%),
-            linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.015)),
+            linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.015)),
             var(--bg-soft);
           border: 1px solid rgba(255,255,255,0.06);
           overflow: hidden;
@@ -237,40 +241,40 @@ export default function App() {
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(circle, rgba(255,255,255,0.45) 1px, transparent 1.5px);
+            radial-gradient(circle, rgba(255,255,255,0.38) 1px, transparent 1.5px);
           background-size: 12px 12px;
-          mask-image: radial-gradient(circle at 72% 30%, black 18%, transparent 62%);
-          opacity: 0.55;
+          mask-image: radial-gradient(circle at 70% 30%, black 18%, transparent 64%);
+          opacity: 0.52;
         }
 
         .hero-blob {
           position: absolute;
-          right: -24px;
+          right: -20px;
           bottom: -10px;
-          width: 88%;
-          height: 88%;
+          width: 86%;
+          height: 86%;
           border-radius: 42% 58% 50% 50% / 34% 38% 62% 66%;
           background:
-            radial-gradient(circle at 70% 28%, rgba(255,255,255,0.42), rgba(255,255,255,0.12) 30%, transparent 52%),
-            linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.015)),
-            rgba(255,255,255,0.025);
+            radial-gradient(circle at 70% 28%, rgba(255,255,255,0.35), rgba(255,255,255,0.1) 30%, transparent 52%),
+            linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.015)),
+            rgba(255,255,255,0.02);
           transform: rotate(-8deg);
-          border: 1px solid rgba(255,255,255,0.06);
+          border: 1px solid rgba(255,255,255,0.05);
         }
 
         .section {
-          padding-top: 26px;
+          padding-top: 24px;
         }
 
         .divider {
-          margin: 28px 0 34px;
+          margin: 30px 0 34px;
           height: 1px;
           background: linear-gradient(90deg, rgba(255,255,255,0.14), rgba(255,255,255,0.03));
         }
 
         .section-title {
           margin: 0 0 24px;
-          font-size: clamp(2rem, 4vw, 3rem);
+          font-size: clamp(2.1rem, 4vw, 3.1rem);
           line-height: 1;
           letter-spacing: -0.03em;
         }
@@ -286,7 +290,7 @@ export default function App() {
           gap: 16px;
           padding: 24px 22px;
           border-radius: 22px;
-          background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.028));
+          background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
           border: 1px solid rgba(255,255,255,0.06);
           box-shadow: inset 0 1px 0 rgba(255,255,255,0.03), 0 10px 24px rgba(0,0,0,0.16);
         }
@@ -313,7 +317,7 @@ export default function App() {
 
         .feature h3 {
           margin: 8px 0 10px;
-          font-size: 1.45rem;
+          font-size: 1.38rem;
           line-height: 1;
           letter-spacing: -0.02em;
         }
@@ -321,7 +325,7 @@ export default function App() {
         .feature p {
           margin: 0;
           color: var(--muted);
-          line-height: 1.7;
+          line-height: 1.72;
           font-size: 0.98rem;
         }
 
@@ -331,7 +335,7 @@ export default function App() {
 
         .join-title {
           margin: 0 0 12px;
-          font-size: clamp(2.4rem, 4vw, 3.6rem);
+          font-size: clamp(2.3rem, 4vw, 3.4rem);
           line-height: 1;
           letter-spacing: -0.04em;
         }
@@ -339,8 +343,8 @@ export default function App() {
         .join-copy {
           margin: 0 0 24px;
           max-width: 760px;
-          font-size: 1.08rem;
-          line-height: 1.8;
+          font-size: 1.05rem;
+          line-height: 1.82;
           color: var(--muted);
         }
 
@@ -357,7 +361,7 @@ export default function App() {
           gap: 14px;
           padding: 22px 18px;
           border-radius: 20px;
-          background: linear-gradient(180deg, rgba(255,255,255,0.055), rgba(255,255,255,0.025));
+          background: linear-gradient(180deg, rgba(255,255,255,0.05), rgba(255,255,255,0.025));
           border: 1px solid rgba(255,255,255,0.06);
         }
 
@@ -376,7 +380,7 @@ export default function App() {
 
         .step h4 {
           margin: 4px 0 10px;
-          font-size: 1.28rem;
+          font-size: 1.18rem;
           line-height: 1;
           letter-spacing: -0.02em;
         }
@@ -394,7 +398,7 @@ export default function App() {
           gap: 18px;
           align-items: center;
           padding: 14px;
-          border-radius: 26px;
+          border-radius: 24px;
           background: var(--white);
           color: var(--black);
           box-shadow: 0 14px 34px rgba(0,0,0,0.18);
@@ -500,7 +504,7 @@ export default function App() {
           }
 
           .hero-title {
-            font-size: clamp(3rem, 14vw, 4.6rem);
+            font-size: clamp(3rem, 14vw, 4.8rem);
           }
 
           .hero-copy {
@@ -554,6 +558,7 @@ export default function App() {
       <main id="top" className="container">
         <section className="hero">
           <div>
+            <div className="hero-tag">Antwerp · curated community</div>
             <h1 className="hero-title logo-font">Join the Clique.</h1>
             <p className="hero-copy">
               A social community in Antwerp bringing people together through curated events, atmosphere and real connection.
