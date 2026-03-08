@@ -448,7 +448,7 @@ export default function App() {
               <div className="card">
                 <div className="clique-logo">
                   <div className="logo-image-wrap">
-  <img src="/clique-logo.png" alt="Clique logo" className="logo-image" />
+  <img src="/pff.png" alt="Clique logo" className="logo-image" />
 </div>
   
 
