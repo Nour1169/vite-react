@@ -297,6 +297,36 @@ export default function App() {
             transform: translateY(0) scale(1);
           }
         }
+        @keyframes secretPulse {
+  0% {
+    box-shadow:
+      0 0 10px rgba(255,255,255,0.18),
+      0 0 22px rgba(255,255,255,0.08);
+    opacity: 0.82;
+  }
+
+  50% {
+    box-shadow:
+      0 0 18px rgba(255,255,255,0.38),
+      0 0 48px rgba(255,255,255,0.18),
+      0 0 82px rgba(255,255,255,0.08);
+    opacity: 1;
+  }
+
+  100% {
+    box-shadow:
+      0 0 10px rgba(255,255,255,0.18),
+      0 0 22px rgba(255,255,255,0.08);
+    opacity: 0.82;
+  }
+}
+
+@media (max-width: 640px) {
+  .secret-text {
+    font-size: 0.92rem;
+    letter-spacing: 0.12em;
+  }
+}
 
         @media (max-width: 640px) {
           .secret-text {
