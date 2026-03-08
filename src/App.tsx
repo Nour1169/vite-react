@@ -184,43 +184,60 @@ export default function App() {
           gap: 20px;
           animation: fadeUp .45s ease;
         }
+.mini-logo {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 310px;
+  padding: 14px 30px 12px;
+  border: 4px solid #fff;
+  border-radius: 999px;
+  background: #000;
+  box-shadow:
+    0 0 0 2px rgba(255,255,255,0.08),
+    inset 0 1px 0 rgba(255,255,255,0.04);
+  position: relative;
+  overflow: visible;
+}
 
-        .mini-logo {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          padding: 12px 22px 10px;
-          border: 3px solid #fff;
-          border-radius: 999px;
-          background: #000;
-          box-shadow: 0 0 0 2px rgba(255,255,255,0.08);
-          position: relative;
-        }
+.mini-logo::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  border-radius: 999px;
+  box-shadow: 0 0 0 2px rgba(255,255,255,0.05);
+  pointer-events: none;
+}
 
-        .mini-logo::after {
-          content: "";
-          position: absolute;
-          left: 20%;
-          bottom: -12px;
-          width: 38px;
-          height: 18px;
-          background: #000;
-          border-left: 3px solid #fff;
-          border-right: 3px solid #fff;
-          border-bottom: 3px solid #fff;
-          border-radius: 0 0 20px 20px;
-          transform: skewX(-30deg);
-        }
+.mini-logo::after {
+  content: "";
+  position: absolute;
+  left: 21%;
+  bottom: -19px;
+  width: 62px;
+  height: 28px;
+  background: #000;
+  border-left: 4px solid #fff;
+  border-right: 4px solid #fff;
+  border-bottom: 4px solid #fff;
+  border-radius: 0 0 32px 32px;
+  transform: skewX(-32deg);
+}
 
-        .logo-word {
-          font-family: 'Baloo 2', cursive;
-          font-size: clamp(2.5rem, 9vw, 3.4rem);
-          line-height: 0.82;
-          font-weight: 800;
-          color: #fff;
-          text-transform: lowercase;
-          letter-spacing: 0.02em;
-        }
+.logo-word {
+  font-family: 'Baloo 2', cursive;
+  font-size: clamp(3.15rem, 10vw, 4.35rem);
+  line-height: 0.76;
+  font-weight: 800;
+  color: #fff;
+  text-transform: lowercase;
+  letter-spacing: -0.04em;
+  transform: scaleX(1.09);
+}
+      
+    
+
+
 
         .quote-wrap {
           min-height: 72px;
