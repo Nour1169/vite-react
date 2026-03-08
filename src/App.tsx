@@ -190,13 +190,9 @@ export default function App() {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 22px 36px 26px;
-  border: 4px solid #fff;
-  border-radius: 120px 120px 140px 140px;
-  background: #000;
-  box-shadow:
-    0 0 0 2px rgba(255,255,255,0.08),
-    inset 0 1px 0 rgba(255,255,255,0.04);
+  padding: 0;
+  background: transparent;
+  border: none;
   text-align: center;
   position: relative;
 }
@@ -363,7 +359,7 @@ export default function App() {
 }
 
 .logo-image {
-  width: clamp(260px, 45vw, 420px);
+  width: clamp(140px, 38vw, 220px);
   height: auto;
   display: block;
 }
