@@ -1,542 +1,300 @@
 import { useEffect, useState, type FormEvent } from "react";
- 
+import logo from "./assets/pff.png";
+
 export default function App() {
-const [stage, setStage] = useState<"hidden" | "quote" | "form">("hidden");
+
+const [stage, setStage] = useState<"hidden" | "quote" | "form" | "unlock">("hidden");
 const [isSubmitting, setIsSubmitting] = useState(false);
 const [isSubmitted, setIsSubmitted] = useState(false);
-const [submitError, setSubmitError] = useState("");
- 
+
+const [inputCode, setInputCode] = useState("");
+const [progressStage, setProgressStage] = useState<number | null>(null);
+
+// 🔥 NEW VIP STATE
+const [vipSubmitted, setVipSubmitted] = useState(false);
+
+const codes: Record<string, number> = {
+  "K7M2": 1,
+  "X9Q4": 2,
+  "L3T8": 3,
+  "P8R1": 4,
+  "V2N7": 5,
+};
+
 useEffect(() => {
-let timer: number | undefined;
- 
 if (stage === "quote") {
-timer = window.setTimeout(() => {
-setStage("form");
-}, 1100);
+setTimeout(() => setStage("form"), 1100);
 }
- 
-return () => {
-if (timer) window.clearTimeout(timer);
-};
 }, [stage]);
- 
-const handleEnter = () => {
-if (stage === "hidden") {
-setStage("quote");
-setIsSubmitted(false);
-setSubmitError("");
-}
-};
- 
+
+// ✅ NORMAL FORM
 const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
- 
 setIsSubmitting(true);
-setSubmitError("");
- 
-const form = e.currentTarget;
-const formData = new FormData(form);
- 
+
+const formData = new FormData(e.currentTarget);
 formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
-formData.append("subject", "Nieuwe aanvraag via Clique Antwerp");
-formData.append("from_name", "Clique Antwerp");
- 
-try {
-const response = await fetch("https://api.web3forms.com/submit", {
+
+await fetch("https://api.web3forms.com/submit", {
 method: "POST",
 body: formData,
 });
- 
-const data = await response.json();
- 
-if (data.success) {
-setIsSubmitted(true);
-form.reset();
-} else {
-setSubmitError("something went wrong");
-}
-} catch {
-setSubmitError("something went wrong");
-} finally {
+
 setIsSubmitting(false);
-}
+setIsSubmitted(true);
 };
- 
+
+// 🔥 VIP FORM (NA 5 EVENTS)
+const handleVIPSubmit = async (e: FormEvent<HTMLFormElement>) => {
+e.preventDefault();
+
+const formData = new FormData(e.currentTarget);
+
+formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
+formData.append("subject", "🔥 Clique VIP unlocked (5 events)");
+
+await fetch("https://api.web3forms.com/submit", {
+method: "POST",
+body: formData,
+});
+
+setVipSubmitted(true);
+};
+
+const handleUnlock = () => {
+const code = inputCode.toUpperCase();
+const stage = codes[code];
+setProgressStage(stage || null);
+};
+
 return (
 <>
 <style>{`
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;700;800&family=Inter:wght@400;500;600;700;800&display=swap');
- 
-* {
-box-sizing: border-box;
-}
- 
-html, body, #root {
-margin: 0;
-width: 100%;
-min-height: 100%;
-}
- 
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;600&display=swap');
+
 body {
-background: #000;
-color: #ffffff;
-font-family: 'Inter', sans-serif;
+margin:0;
+background:#000;
+color:#fff;
+font-family:'Inter',sans-serif;
 }
- 
+
 .page {
-min-height: 100vh;
-width: 100%;
-position: relative;
-overflow: hidden;
-display: flex;
-align-items: center;
-justify-content: center;
-background:
-radial-gradient(circle at center, rgba(255,255,255,0.035) 0%, transparent 28%),
-linear-gradient(180deg, #000 0%, #000 100%);
+height:100vh;
+display:flex;
+align-items:center;
+justify-content:center;
 }
- 
-.page::before {
-content: "";
-position: absolute;
-inset: 0;
-background:
-radial-gradient(circle at 50% 42%, rgba(255,255,255,0.04), transparent 18%),
-radial-gradient(circle at 50% 60%, rgba(255,255,255,0.02), transparent 26%);
-pointer-events: none;
-}
- 
-.wrap {
-position: relative;
-z-index: 2;
-width: 100%;
-padding: 24px 16px;
-display: flex;
-align-items: center;
-justify-content: center;
-}
- 
-.hidden-stage {
-width: 100%;
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-position: relative;
-}
- 
+
 .secret-button {
-appearance: none;
-border: 0;
-background: transparent;
-padding: 0;
-cursor: pointer;
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 18px;
-transition: transform .25s ease;
+background:none;
+border:none;
+cursor:pointer;
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
 }
- 
-.secret-button:hover {
-transform: scale(1.02);
-}
- 
+
 .secret-mark {
-width: 18px;
-height: 18px;
-border-radius: 999px;
-background: rgba(255,255,255,0.92);
-box-shadow:
-0 0 14px rgba(255,255,255,0.28),
-0 0 34px rgba(255,255,255,0.12);
-transition: transform .25s ease, opacity .25s ease;
-animation: secretPulse 3.2s ease-in-out infinite;
+width:16px;
+height:16px;
+border-radius:50%;
+background:white;
+animation:pulse 2s infinite;
 }
- 
-.secret-button:hover .secret-mark {
-transform: scale(1.15);
+
+@keyframes pulse {
+0%{opacity:.5;transform:scale(1)}
+50%{opacity:1;transform:scale(1.3)}
+100%{opacity:.5;transform:scale(1)}
 }
- 
+
 .secret-text {
-font-family: 'Baloo 2', cursive;
-font-size: 1rem;
-letter-spacing: 0.16em;
-text-transform: uppercase;
-color: rgba(255,255,255,0.22);
-text-align: center;
+opacity:.3;
+font-family:'Baloo 2';
+letter-spacing:2px;
 }
- 
-.reveal-stage {
-width: 100%;
-min-height: 100vh;
-display: flex;
-align-items: center;
-justify-content: center;
-padding: 24px 16px;
-}
- 
+
 .card {
-width: min(92vw, 430px);
-display: flex;
-flex-direction: column;
-align-items: center;
-gap: 20px;
-animation: fadeUp .45s ease;
+width:380px;
+text-align:center;
+display:flex;
+flex-direction:column;
+gap:20px;
+align-items:center;
 }
- 
-.clique-logo {
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: center;
-padding: 0;
-background: transparent;
-border: none;
-text-align: center;
-position: relative;
+
+.logo-image {
+width:180px;
+transition:.4s;
 }
- 
-.clique-title {
-font-family: 'Baloo 2', cursive;
-font-size: clamp(3rem, 9vw, 4rem);
-font-weight: 800;
-line-height: 0.9;
-letter-spacing: -0.04em;
-color: #fff;
-text-transform: lowercase;
+
+.logo-image:hover {
+transform:scale(1.05);
+filter:drop-shadow(0 0 10px rgba(255,255,255,0.2));
 }
- 
-.clique-sub {
-margin-top: 10px;
-font-family: 'Inter', sans-serif;
-font-size: 0.95rem;
-font-weight: 700;
-line-height: 1.15;
-color: #fff;
-opacity: 0.9;
-}
- 
-.quote-wrap {
-min-height: 72px;
-display: flex;
-align-items: center;
-justify-content: center;
-text-align: center;
-}
- 
+
 .quote {
-margin: 0;
-font-family: 'Baloo 2', cursive;
-font-size: clamp(1.8rem, 6vw, 2.5rem);
-line-height: 1.05;
-color: #fff;
-animation: fadeUp .4s ease;
+font-family:'Baloo 2';
+font-size:28px;
 }
- 
-.form-panel {
-width: 100%;
-border-radius: 28px;
-border: 1px solid rgba(255,255,255,0.14);
-background: linear-gradient(180deg, rgba(12,14,18,0.94) 0%, rgba(5,6,9,0.98) 100%);
-box-shadow:
-0 24px 70px rgba(0,0,0,0.52),
-inset 0 1px 0 rgba(255,255,255,0.04);
-padding: 22px;
-animation: fadeUp .45s ease;
-}
- 
-.form-title {
-margin: 0;
-text-align: center;
-font-family: 'Baloo 2', cursive;
-font-size: clamp(1.6rem, 5vw, 2rem);
-line-height: 1;
-color: #fff;
-}
- 
-.form-copy {
-margin: 12px auto 0;
-max-width: 320px;
-text-align: center;
-font-size: 0.95rem;
-line-height: 1.55;
-color: rgba(255,255,255,0.56);
-}
- 
-.form {
-margin-top: 18px;
-display: flex;
-flex-direction: column;
-gap: 12px;
-}
- 
-.field-row {
-display: flex;
-gap: 12px;
-}
- 
-.field-row .field {
-flex: 1;
-min-width: 0;
-}
- 
+
 .field {
-width: 100%;
-border-radius: 18px;
-border: 1px solid rgba(255,255,255,0.1);
-background: rgba(255,255,255,0.025);
-color: #fff;
-padding: 15px 16px;
-outline: none;
-font-size: 0.98rem;
-font-family: 'Inter', sans-serif;
-transition: border-color .25s ease, background .25s ease, transform .25s ease;
+width:100%;
+padding:14px;
+border-radius:14px;
+border:1px solid rgba(255,255,255,0.2);
+background:rgba(255,255,255,0.03);
+color:white;
+margin-top:8px;
 }
- 
-.field::placeholder {
-color: rgba(255,255,255,0.34);
-}
- 
-.field:focus {
-border-color: rgba(255,255,255,0.2);
-background: rgba(255,255,255,0.045);
-transform: translateY(-1px);
-}
- 
-/* Remove number input spinners */
-.field[type="number"]::-webkit-inner-spin-button,
-.field[type="number"]::-webkit-outer-spin-button {
--webkit-appearance: none;
-margin: 0;
-}
-.field[type="number"] {
--moz-appearance: textfield;
-}
- 
+
 .cta {
-width: 100%;
-border: 1px solid rgba(255,255,255,0.16);
-border-radius: 999px;
-background: #fff;
-color: #000;
-padding: 15px 20px;
-cursor: pointer;
-font-family: 'Baloo 2', cursive;
-font-size: 1.08rem;
-font-weight: 800;
-letter-spacing: 0.04em;
-transition: transform .25s ease, box-shadow .25s ease, opacity .25s ease;
-box-shadow: 0 12px 28px rgba(255,255,255,0.1);
+width:100%;
+padding:14px;
+border-radius:999px;
+background:white;
+color:black;
+margin-top:10px;
+cursor:pointer;
+transition:.3s;
 }
- 
+
 .cta:hover {
-transform: translateY(-2px);
-box-shadow: 0 16px 36px rgba(255,255,255,0.14);
+transform:translateY(-2px);
 }
- 
-.cta:disabled {
-opacity: 0.7;
-cursor: not-allowed;
+
+.subtle {
+opacity:.4;
+font-size:13px;
 }
- 
-.success-message {
-margin-top: 8px;
-text-align: center;
-font-size: 0.95rem;
-color: rgba(255,255,255,0.8);
-font-family: 'Inter', sans-serif;
+
+.progress {
+display:flex;
+gap:6px;
+margin-top:10px;
 }
- 
-.error-message {
-margin-top: 8px;
-text-align: center;
-font-size: 0.92rem;
-color: rgba(255,255,255,0.58);
-font-family: 'Inter', sans-serif;
+
+.dot {
+width:8px;
+height:8px;
+border-radius:50%;
+background:#333;
 }
- 
-.footer-note {
-margin-top: 2px;
-font-size: 0.9rem;
-color: rgba(255,255,255,0.34);
-text-align: center;
-}
- 
-.logo-image-wrap {
-display: flex;
-justify-content: center;
-align-items: center;
-}
- 
-.logo-image {
-width: clamp(140px, 38vw, 220px);
-height: auto;
-display: block;
-}
- 
-@keyframes fadeUp {
-from {
-opacity: 0;
-transform: translateY(18px) scale(0.985);
-}
-to {
-opacity: 1;
-transform: translateY(0) scale(1);
-}
-}
- 
-@keyframes secretPulse {
-0% {
-box-shadow:
-0 0 10px rgba(255,255,255,0.18),
-0 0 22px rgba(255,255,255,0.08);
-opacity: 0.82;
-}
-50% {
-box-shadow:
-0 0 18px rgba(255,255,255,0.38),
-0 0 48px rgba(255,255,255,0.18),
-0 0 82px rgba(255,255,255,0.08);
-opacity: 1;
-}
-100% {
-box-shadow:
-0 0 10px rgba(255,255,255,0.18),
-0 0 22px rgba(255,255,255,0.08);
-opacity: 0.82;
-}
-}
- 
-@media (max-width: 640px) {
-.secret-text {
-font-size: 0.92rem;
-letter-spacing: 0.12em;
-}
- 
-.form-panel {
-padding: 18px;
-}
- 
-.logo-image {
-width: clamp(220px, 70vw, 340px);
-}
+
+.dot.active {
+background:white;
 }
 `}</style>
- 
-<main className="page">
-<div className="wrap">
+
+<div className="page">
+
+{/* 🔘 ENTRY */}
 {stage === "hidden" && (
-<section className="hidden-stage">
-<button
-type="button"
-className="secret-button"
-onClick={handleEnter}
-aria-label="Enter Clique"
->
-<div className="secret-mark" />
+<button className="secret-button" onClick={() => setStage("quote")}>
+<div className="secret-mark"/>
 <div className="secret-text">you're one clique away</div>
 </button>
-</section>
 )}
- 
+
+{/* 🔓 CONTENT */}
 {stage !== "hidden" && (
-<section className="reveal-stage">
 <div className="card">
-<div className="clique-logo">
-<div className="logo-image-wrap">
-<img src="/pff.png" alt="Clique logo" className="logo-image" />
-</div>
-</div>
- 
-<div className="quote-wrap">
+
+<img src={logo} className="logo-image" />
+
 {stage === "quote" && (
 <p className="quote">so... you found us</p>
 )}
+
 {stage === "form" && (
+<>
 <p className="quote">not everyone finds the clique</p>
-)}
-</div>
- 
-{stage === "form" && (
-<div className="form-panel">
-<h2 className="form-title">enter your details</h2>
-<p className="form-copy">
-leave your info and get first access to upcoming events, drops and invite-only moments.
-</p>
- 
-<form className="form" onSubmit={handleSubmit}>
-<input
-className="field"
-type="text"
-name="name"
-placeholder="your name"
-required
-/>
- 
-<input
-className="field"
-type="email"
-name="email"
-placeholder="your email"
-required
-/>
- 
-<div className="field-row">
-<input
-className="field"
-type="tel"
-name="phone"
-placeholder="phone number"
-required
-/>
-<input
-className="field"
-type="number"
-name="age"
-placeholder="age"
-min="16"
-max="99"
-required
-/>
-</div>
- 
-<input
-className="field"
-type="text"
-name="instagram"
-placeholder="instagram @optional"
-/>
- 
-<input
-type="checkbox"
-name="botcheck"
-style={{ display: "none" }}
-/>
- 
-<button className="cta" type="submit" disabled={isSubmitting}>
+
+<form onSubmit={handleSubmit}>
+<input name="name" className="field" placeholder="your name" required />
+<input name="email" className="field" placeholder="your email" required />
+
+<button className="cta">
 {isSubmitting ? "sending..." : "join the clique"}
 </button>
- 
-{isSubmitted && (
-<p className="success-message">see you soon</p>
-)}
- 
-{submitError && (
-<p className="error-message">{submitError}</p>
-)}
 </form>
+
+{isSubmitted && <p className="subtle">see you soon</p>}
+
+<div>
+<p className="subtle">already part of clique?</p>
+
+<input
+className="field"
+placeholder="enter your code"
+value={inputCode}
+onChange={(e)=>setInputCode(e.target.value)}
+/>
+
+<button className="cta" onClick={()=>setStage("unlock")}>
+continue
+</button>
+</div>
+</>
+)}
+
+{stage === "unlock" && (
+<>
+<p className="quote">you made it further</p>
+
+<input
+className="field"
+placeholder="your code"
+value={inputCode}
+onChange={(e)=>setInputCode(e.target.value)}
+/>
+
+<button className="cta" onClick={handleUnlock}>
+unlock
+</button>
+
+{progressStage && (
+<>
+<p className="subtle">stage {progressStage} unlocked</p>
+
+<div className="progress">
+{[1,2,3,4,5].map(i => (
+<div key={i} className={`dot ${i <= progressStage ? "active" : ""}`}/>
+))}
+</div>
+
+{/* 🔥 VIP FORM BIJ STAGE 5 */}
+{progressStage >= 5 && !vipSubmitted && (
+<>
+<p style={{marginTop:10}}>you’ve earned access</p>
+
+<form onSubmit={handleVIPSubmit}>
+<input name="name" className="field" placeholder="your name" required />
+<input name="email" className="field" placeholder="your email" required />
+<input name="instagram" className="field" placeholder="your instagram" required />
+<input name="phone" className="field" placeholder="your number" required />
+
+<button className="cta">unlock full access</button>
+</form>
+</>
+)}
+
+{vipSubmitted && (
+<p style={{marginTop:10}}>you’re in. invitation coming soon.</p>
+)}
+
+</>
+)}
+
+</>
+)}
+
 </div>
 )}
- 
-{stage === "form" && (
-<div className="footer-note">Antwerp social community</div>
-)}
+
 </div>
-</section>
-)}
-</div>
-</main>
 </>
 );
 }
