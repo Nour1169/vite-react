@@ -10,7 +10,6 @@ const [isSubmitted, setIsSubmitted] = useState(false);
 const [inputCode, setInputCode] = useState("");
 const [progressStage, setProgressStage] = useState<number | null>(null);
 
-// 🔥 NEW VIP STATE
 const [vipSubmitted, setVipSubmitted] = useState(false);
 
 const codes: Record<string, number> = {
@@ -44,12 +43,11 @@ setIsSubmitting(false);
 setIsSubmitted(true);
 };
 
-// 🔥 VIP FORM (NA 5 EVENTS)
+// 🔥 VIP FORM
 const handleVIPSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
 
 const formData = new FormData(e.currentTarget);
-
 formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
 formData.append("subject", "🔥 Clique VIP unlocked (5 events)");
 
@@ -61,10 +59,13 @@ body: formData,
 setVipSubmitted(true);
 };
 
+// 🔥 FIXED UNLOCK
 const handleUnlock = () => {
 const code = inputCode.toUpperCase();
-const stage = codes[code];
-setProgressStage(stage || null);
+const stageFound = codes[code];
+
+setProgressStage(stageFound || null);
+setStage("unlock"); // 👈 zorgt dat je direct naar unlock gaat
 };
 
 return (
@@ -223,6 +224,7 @@ background:white;
 
 {isSubmitted && <p className="subtle">see you soon</p>}
 
+{/* 🔥 FIXED CODE INPUT */}
 <div>
 <p className="subtle">already part of clique?</p>
 
@@ -233,8 +235,8 @@ value={inputCode}
 onChange={(e)=>setInputCode(e.target.value)}
 />
 
-<button className="cta" onClick={()=>setStage("unlock")}>
-continue
+<button className="cta" onClick={handleUnlock}>
+unlock
 </button>
 </div>
 </>
@@ -265,7 +267,7 @@ unlock
 ))}
 </div>
 
-{/* 🔥 VIP FORM BIJ STAGE 5 */}
+{/* 🔥 VIP */}
 {progressStage >= 5 && !vipSubmitted && (
 <>
 <p style={{marginTop:10}}>you’ve earned access</p>
