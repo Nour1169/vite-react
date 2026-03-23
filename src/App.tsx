@@ -26,7 +26,6 @@ setTimeout(() => setStage("form"), 1100);
 }
 }, [stage]);
 
-// ✅ NORMAL FORM
 const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
 setIsSubmitting(true);
@@ -43,7 +42,6 @@ setIsSubmitting(false);
 setIsSubmitted(true);
 };
 
-// 🔥 VIP FORM
 const handleVIPSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
 
@@ -59,7 +57,6 @@ body: formData,
 setVipSubmitted(true);
 };
 
-// 🔥 UNLOCK FIX
 const handleUnlock = () => {
 const code = inputCode.toUpperCase();
 const stageFound = codes[code];
@@ -111,15 +108,15 @@ animation:pulse 2s infinite;
 100%{opacity:.5;transform:scale(1)}
 }
 
+/* 🔥 FIX TEXT (altijd zichtbaar) */
 .secret-text {
-opacity:.3;
-font-family:'Baloo 2';
+opacity:.35;
+font-family:'Baloo 2', cursive;
 letter-spacing:2px;
 }
 
 .card {
 width:380px;
-max-width:90%;
 text-align:center;
 display:flex;
 flex-direction:column;
@@ -127,17 +124,18 @@ gap:20px;
 align-items:center;
 }
 
+/* 🔥 FIX LOGO (geen glow meer) */
 .logo-image {
 width:180px;
 max-width:100%;
 height:auto;
 object-fit:contain;
-transition:.4s;
+transition:.3s;
 }
 
+/* ❌ DROP SHADOW VERWIJDERD */
 .logo-image:hover {
-transform:scale(1.05);
-filter:drop-shadow(0 0 10px rgba(255,255,255,0.2));
+transform:scale(1.03);
 }
 
 .quote {
@@ -195,7 +193,6 @@ background:white;
 
 <div className="page">
 
-{/* 🔘 ENTRY */}
 {stage === "hidden" && (
 <button className="secret-button" onClick={() => setStage("quote")}>
 <div className="secret-mark"/>
@@ -203,7 +200,6 @@ background:white;
 </button>
 )}
 
-{/* 🔓 CONTENT */}
 {stage !== "hidden" && (
 <div className="card">
 
@@ -228,7 +224,6 @@ background:white;
 
 {isSubmitted && <p className="subtle">see you soon</p>}
 
-{/* 🔥 DIRECT CODE INPUT (FIXED) */}
 <div>
 <p className="subtle">already part of clique?</p>
 
@@ -271,7 +266,6 @@ unlock
 ))}
 </div>
 
-{/* 🔥 VIP */}
 {progressStage >= 5 && !vipSubmitted && (
 <>
 <p style={{marginTop:10}}>you’ve earned access</p>
