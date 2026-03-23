@@ -68,6 +68,7 @@ setStage("unlock");
 return (
 <>
 <style>{`
+
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;600&display=swap');
 
 body {
@@ -94,6 +95,7 @@ align-items:center;
 gap:12px;
 }
 
+/* 🔥 DOT */
 .secret-mark {
 width:16px;
 height:16px;
@@ -102,17 +104,19 @@ background:white;
 animation:pulse 2s infinite;
 }
 
+/* 🔥 ANIMATION */
 @keyframes pulse {
 0%{opacity:.5;transform:scale(1)}
 50%{opacity:1;transform:scale(1.3)}
 100%{opacity:.5;transform:scale(1)}
 }
 
-/* 🔥 FIX TEXT (altijd zichtbaar) */
+/* 🔥 FIX TEXT (GEEN OPACITY PROBLEEM) */
 .secret-text {
-opacity:.35;
+opacity:0.7; /* 👈 hoger gezet */
 font-family:'Baloo 2', cursive;
 letter-spacing:2px;
+color:#fff; /* 👈 force zichtbaar */
 }
 
 .card {
@@ -124,20 +128,20 @@ gap:20px;
 align-items:center;
 }
 
-/* 🔥 FIX LOGO (geen glow meer) */
+/* 🔥 FIX LOGO */
 .logo-image {
 width:180px;
-max-width:100%;
 height:auto;
 object-fit:contain;
 transition:.3s;
 }
 
-/* ❌ DROP SHADOW VERWIJDERD */
+/* ❌ GEEN GLOW MEER */
 .logo-image:hover {
 transform:scale(1.03);
 }
 
+/* 🔥 TEXT */
 .quote {
 font-family:'Baloo 2';
 font-size:28px;
@@ -169,7 +173,7 @@ transform:translateY(-2px);
 }
 
 .subtle {
-opacity:.4;
+opacity:.5;
 font-size:13px;
 }
 
@@ -189,6 +193,7 @@ background:#333;
 .dot.active {
 background:white;
 }
+
 `}</style>
 
 <div className="page">
@@ -298,4 +303,3 @@ unlock
 </>
 );
 }
-
