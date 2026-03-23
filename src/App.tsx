@@ -59,13 +59,13 @@ body: formData,
 setVipSubmitted(true);
 };
 
-// 🔥 FIXED UNLOCK
+// 🔥 UNLOCK FIX
 const handleUnlock = () => {
 const code = inputCode.toUpperCase();
 const stageFound = codes[code];
 
 setProgressStage(stageFound || null);
-setStage("unlock"); // 👈 zorgt dat je direct naar unlock gaat
+setStage("unlock");
 };
 
 return (
@@ -119,6 +119,7 @@ letter-spacing:2px;
 
 .card {
 width:380px;
+max-width:90%;
 text-align:center;
 display:flex;
 flex-direction:column;
@@ -128,6 +129,9 @@ align-items:center;
 
 .logo-image {
 width:180px;
+max-width:100%;
+height:auto;
+object-fit:contain;
 transition:.4s;
 }
 
@@ -224,7 +228,7 @@ background:white;
 
 {isSubmitted && <p className="subtle">see you soon</p>}
 
-{/* 🔥 FIXED CODE INPUT */}
+{/* 🔥 DIRECT CODE INPUT (FIXED) */}
 <div>
 <p className="subtle">already part of clique?</p>
 
@@ -300,3 +304,4 @@ unlock
 </>
 );
 }
+
