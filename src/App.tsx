@@ -26,15 +26,27 @@ setTimeout(() => setStage("form"), 1100);
 }
 }, [stage]);
 
-// 🔥 FIXED SUBMIT
+// 🔥 FIXED SUBMIT (BELANGRIJK)
 const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
 setIsSubmitting(true);
 
-const formData = new FormData(e.currentTarget);
+const form = e.currentTarget;
+
+const formData = new FormData();
+
 formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
 formData.append("subject", "New Clique signup");
 formData.append("from_name", "Clique Website");
+
+// 🔥 EXPLICIET ALLE VELDEN
+formData.append("name", (form.elements.namedItem("name") as HTMLInputElement).value);
+formData.append("email", (form.elements.namedItem("email") as HTMLInputElement).value);
+formData.append("age", (form.elements.namedItem("age") as HTMLInputElement).value);
+formData.append("instagram", (form.elements.namedItem("instagram") as HTMLInputElement).value);
+
+// 🔥 BELANGRIJK VOOR DELIVERY
+formData.append("replyto", (form.elements.namedItem("email") as HTMLInputElement).value);
 
 try {
 const res = await fetch("https://api.web3forms.com/submit", {
@@ -48,7 +60,7 @@ console.log("WEB3 RESPONSE:", data);
 if (data.success) {
 setIsSubmitted(true);
 } else {
-alert("Something went wrong");
+alert("Submit failed");
 }
 
 } catch (err) {
@@ -245,7 +257,7 @@ background:white;
 
 <form onSubmit={handleSubmit}>
 <input name="name" className="field" placeholder="your name" required />
-<input name="email" className="field" placeholder="your email" required />
+<input name="email" type="email" className="field" placeholder="your email" required />
 <input name="age" className="field" placeholder="your age" required />
 <input name="instagram" className="field" placeholder="your instagram" required />
 
