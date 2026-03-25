@@ -95,7 +95,6 @@ align-items:center;
 gap:12px;
 }
 
-/* 🔥 DOT */
 .secret-mark {
 width:16px;
 height:16px;
@@ -104,19 +103,17 @@ background:white;
 animation:pulse 2s infinite;
 }
 
-/* 🔥 ANIMATION */
 @keyframes pulse {
 0%{opacity:.5;transform:scale(1)}
 50%{opacity:1;transform:scale(1.3)}
 100%{opacity:.5;transform:scale(1)}
 }
 
-/* 🔥 FIX TEXT (GEEN OPACITY PROBLEEM) */
 .secret-text {
-opacity:0.7; /* 👈 hoger gezet */
+opacity:0.7;
 font-family:'Baloo 2', cursive;
 letter-spacing:2px;
-color:#fff; /* 👈 force zichtbaar */
+color:#fff;
 }
 
 .card {
@@ -128,7 +125,6 @@ gap:20px;
 align-items:center;
 }
 
-/* 🔥 FIX LOGO */
 .logo-image {
 width:180px;
 height:auto;
@@ -136,12 +132,10 @@ object-fit:contain;
 transition:.3s;
 }
 
-/* ❌ GEEN GLOW MEER */
 .logo-image:hover {
 transform:scale(1.03);
 }
 
-/* 🔥 TEXT */
 .quote {
 font-family:'Baloo 2';
 font-size:28px;
@@ -175,6 +169,23 @@ transform:translateY(-2px);
 .subtle {
 opacity:.5;
 font-size:13px;
+}
+
+/* 🔥 NIEUWE SUCCESS BAR */
+.success-bar {
+width:100%;
+padding:14px;
+border-radius:14px;
+background:#16a34a;
+color:white;
+font-weight:600;
+margin-top:12px;
+animation:fadeIn .4s ease;
+}
+
+@keyframes fadeIn {
+from {opacity:0; transform:translateY(5px);}
+to {opacity:1; transform:translateY(0);}
 }
 
 .progress {
@@ -221,13 +232,19 @@ background:white;
 <form onSubmit={handleSubmit}>
 <input name="name" className="field" placeholder="your name" required />
 <input name="email" className="field" placeholder="your email" required />
+<input name="age" className="field" placeholder="your age" required />
+<input name="instagram" className="field" placeholder="your instagram" required />
 
 <button className="cta">
 {isSubmitting ? "sending..." : "join the clique"}
 </button>
 </form>
 
-{isSubmitted && <p className="subtle">see you soon</p>}
+{isSubmitted && (
+<div className="success-bar">
+✔ welcome to the clique — see you soon.
+</div>
+)}
 
 <div>
 <p className="subtle">already part of clique?</p>
