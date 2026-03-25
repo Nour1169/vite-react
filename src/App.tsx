@@ -68,7 +68,6 @@ setStage("unlock");
 return (
 <>
 <style>{`
-
 @import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@700;800&family=Inter:wght@400;600&display=swap');
 
 body {
@@ -171,7 +170,6 @@ opacity:.5;
 font-size:13px;
 }
 
-/* 🔥 NIEUWE SUCCESS BAR */
 .success-bar {
 width:100%;
 padding:14px;
@@ -204,7 +202,6 @@ background:#333;
 .dot.active {
 background:white;
 }
-
 `}</style>
 
 <div className="page">
@@ -263,24 +260,17 @@ unlock
 </>
 )}
 
-{stage === "unlock" && (
+{stage === "unlock" && progressStage && (
 <>
-<p className="quote">you made it further</p>
+<p className="quote">
+stage {progressStage} unlocked
+</p>
 
-<input
-className="field"
-placeholder="your code"
-value={inputCode}
-onChange={(e)=>setInputCode(e.target.value)}
-/>
-
-<button className="cta" onClick={handleUnlock}>
-unlock
-</button>
-
-{progressStage && (
-<>
-<p className="subtle">stage {progressStage} unlocked</p>
+<p className="subtle">
+{progressStage < 5
+? "you’re officially part of the clique."
+: "you’ve been with us from the start."}
+</p>
 
 <div className="progress">
 {[1,2,3,4,5].map(i => (
@@ -290,7 +280,9 @@ unlock
 
 {progressStage >= 5 && !vipSubmitted && (
 <>
-<p style={{marginTop:10}}>you’ve earned access</p>
+<p style={{marginTop:10}}>
+you’ve attended 5 events — we appreciate your trust.
+</p>
 
 <form onSubmit={handleVIPSubmit}>
 <input name="name" className="field" placeholder="your name" required />
@@ -304,10 +296,9 @@ unlock
 )}
 
 {vipSubmitted && (
-<p style={{marginTop:10}}>you’re in. invitation coming soon.</p>
-)}
-
-</>
+<p style={{marginTop:10}}>
+you’re in. we’ll contact you soon.
+</p>
 )}
 
 </>
