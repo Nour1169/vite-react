@@ -26,20 +26,37 @@ setTimeout(() => setStage("form"), 1100);
 }
 }, [stage]);
 
+// 🔥 FIXED SUBMIT
 const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
 setIsSubmitting(true);
 
 const formData = new FormData(e.currentTarget);
 formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
+formData.append("subject", "New Clique signup");
+formData.append("from_name", "Clique Website");
 
-await fetch("https://api.web3forms.com/submit", {
+try {
+const res = await fetch("https://api.web3forms.com/submit", {
 method: "POST",
 body: formData,
 });
 
-setIsSubmitting(false);
+const data = await res.json();
+console.log("WEB3 RESPONSE:", data);
+
+if (data.success) {
 setIsSubmitted(true);
+} else {
+alert("Something went wrong");
+}
+
+} catch (err) {
+console.error(err);
+alert("Network error");
+}
+
+setIsSubmitting(false);
 };
 
 const handleVIPSubmit = async (e: FormEvent<HTMLFormElement>) => {
