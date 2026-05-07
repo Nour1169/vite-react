@@ -26,12 +26,12 @@ setTimeout(() => setStage("form"), 1100);
 }
 }, [stage]);
 
-// 🔥 DEFINITIEVE WERKENDE SUBMIT
 const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
 setIsSubmitting(true);
 
-const formData = new FormData(e.currentTarget);
+const form = e.currentTarget;
+const formData = new FormData(form);
 
 formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
 formData.append("subject", "New Clique signup");
@@ -49,6 +49,7 @@ console.log("WEB3 RESPONSE:", data);
 
 if (data.success) {
 setIsSubmitted(true);
+form.reset();
 } else {
 alert(data.message || "Something went wrong");
 }
@@ -65,6 +66,7 @@ const handleVIPSubmit = async (e: FormEvent<HTMLFormElement>) => {
 e.preventDefault();
 
 const formData = new FormData(e.currentTarget);
+
 formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
 formData.append("subject", "🔥 Clique VIP unlocked (5 events)");
 
@@ -94,13 +96,15 @@ margin:0;
 background:#000;
 color:#fff;
 font-family:'Inter',sans-serif;
+overflow-x:hidden;
 }
 
 .page {
-height:100vh;
+min-height:100vh;
 display:flex;
 align-items:center;
 justify-content:center;
+padding:20px;
 }
 
 .secret-button {
@@ -122,9 +126,18 @@ animation:pulse 2s infinite;
 }
 
 @keyframes pulse {
-0%{opacity:.5;transform:scale(1)}
-50%{opacity:1;transform:scale(1.3)}
-100%{opacity:.5;transform:scale(1)}
+0%{
+opacity:.5;
+transform:scale(1)
+}
+50%{
+opacity:1;
+transform:scale(1.3)
+}
+100%{
+opacity:.5;
+transform:scale(1)
+}
 }
 
 .secret-text {
@@ -135,7 +148,8 @@ color:#fff;
 }
 
 .card {
-width:380px;
+width:100%;
+max-width:380px;
 text-align:center;
 display:flex;
 flex-direction:column;
@@ -157,16 +171,35 @@ transform:scale(1.03);
 .quote {
 font-family:'Baloo 2';
 font-size:28px;
+line-height:1.1;
+margin:0;
 }
 
 .field {
 width:100%;
 padding:14px;
 border-radius:14px;
-border:1px solid rgba(255,255,255,0.2);
+border:1px solid rgba(255,255,255,0.15);
 background:rgba(255,255,255,0.03);
 color:white;
 margin-top:8px;
+outline:none;
+font-size:15px;
+box-sizing:border-box;
+transition:.25s;
+}
+
+.field:focus {
+border-color:rgba(255,255,255,0.35);
+background:rgba(255,255,255,0.05);
+}
+
+.field::placeholder {
+color:rgba(255,255,255,0.45);
+}
+
+input[type="date"] {
+color-scheme:dark;
 }
 
 .cta {
@@ -175,9 +208,12 @@ padding:14px;
 border-radius:999px;
 background:white;
 color:black;
-margin-top:10px;
+margin-top:14px;
 cursor:pointer;
 transition:.3s;
+border:none;
+font-weight:600;
+font-size:15px;
 }
 
 .cta:hover {
@@ -187,22 +223,7 @@ transform:translateY(-2px);
 .subtle {
 opacity:.5;
 font-size:13px;
-}
-
-.success-bar {
-width:100%;
-padding:14px;
-border-radius:14px;
-background:#16a34a;
-color:white;
-font-weight:600;
-margin-top:12px;
-animation:fadeIn .4s ease;
-}
-
-@keyframes fadeIn {
-from {opacity:0; transform:translateY(5px);}
-to {opacity:1; transform:translateY(0);}
+line-height:1.5;
 }
 
 .progress {
@@ -220,6 +241,97 @@ background:#333;
 
 .dot.active {
 background:white;
+}
+
+.success-popup-overlay {
+position:fixed;
+inset:0;
+background:rgba(0,0,0,0.82);
+backdrop-filter:blur(8px);
+display:flex;
+align-items:center;
+justify-content:center;
+z-index:999;
+padding:20px;
+animation:fadeIn .3s ease;
+}
+
+.success-popup {
+width:100%;
+max-width:420px;
+background:#0d0d0d;
+border:1px solid rgba(255,255,255,0.08);
+border-radius:28px;
+padding:42px 30px;
+text-align:center;
+box-shadow:0 0 60px rgba(255,255,255,0.06);
+animation:popupIn .35s ease;
+}
+
+.success-icon {
+width:74px;
+height:74px;
+border-radius:50%;
+background:white;
+color:black;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:34px;
+font-weight:800;
+margin:0 auto 24px;
+}
+
+.success-popup h2 {
+font-family:'Baloo 2';
+font-size:34px;
+line-height:1.05;
+margin:0 0 18px;
+}
+
+.success-popup p {
+opacity:.75;
+line-height:1.7;
+font-size:15px;
+margin:0;
+}
+
+.popup-button {
+margin-top:28px;
+width:100%;
+padding:14px;
+border:none;
+border-radius:999px;
+background:white;
+color:black;
+font-weight:600;
+cursor:pointer;
+transition:.3s;
+font-size:15px;
+}
+
+.popup-button:hover {
+transform:translateY(-2px);
+}
+
+@keyframes fadeIn {
+from {
+opacity:0;
+}
+to {
+opacity:1;
+}
+}
+
+@keyframes popupIn {
+from {
+opacity:0;
+transform:scale(.94) translateY(10px);
+}
+to {
+opacity:1;
+transform:scale(1) translateY(0);
+}
 }
 `}</style>
 
@@ -245,24 +357,42 @@ background:white;
 <>
 <p className="quote">not everyone finds the clique</p>
 
-<form onSubmit={handleSubmit}>
-<input name="name" className="field" placeholder="your name" required />
-<input name="email" type="email" className="field" placeholder="your email" required />
-<input name="age" className="field" placeholder="your age" required />
-<input name="instagram" className="field" placeholder="your instagram" required />
+<form onSubmit={handleSubmit} style={{width:"100%"}}>
+<input 
+name="name" 
+className="field" 
+placeholder="your name" 
+required 
+/>
+
+<input 
+name="email" 
+type="email" 
+className="field" 
+placeholder="your email" 
+required 
+/>
+
+<input 
+name="birthdate" 
+type="date"
+className="field" 
+required 
+/>
+
+<input 
+name="instagram" 
+className="field" 
+placeholder="your instagram" 
+required 
+/>
 
 <button className="cta">
 {isSubmitting ? "sending..." : "join the clique"}
 </button>
 </form>
 
-{isSubmitted && (
-<div className="success-bar">
-✔ welcome to the clique — see you soon.
-</div>
-)}
-
-<div>
+<div style={{width:"100%"}}>
 <p className="subtle">already part of clique?</p>
 
 <input
@@ -293,7 +423,10 @@ stage {progressStage} unlocked
 
 <div className="progress">
 {[1,2,3,4,5].map(i => (
-<div key={i} className={`dot ${i <= progressStage ? "active" : ""}`}/>
+<div 
+key={i} 
+className={`dot ${i <= progressStage ? "active" : ""}`}
+/>
 ))}
 </div>
 
@@ -303,13 +436,38 @@ stage {progressStage} unlocked
 you’ve attended 5 events — we appreciate your trust.
 </p>
 
-<form onSubmit={handleVIPSubmit}>
-<input name="name" className="field" placeholder="your name" required />
-<input name="email" className="field" placeholder="your email" required />
-<input name="instagram" className="field" placeholder="your instagram" required />
-<input name="phone" className="field" placeholder="your number" required />
+<form onSubmit={handleVIPSubmit} style={{width:"100%"}}>
+<input 
+name="name" 
+className="field" 
+placeholder="your name" 
+required 
+/>
 
-<button className="cta">unlock full access</button>
+<input 
+name="email" 
+className="field" 
+placeholder="your email" 
+required 
+/>
+
+<input 
+name="instagram" 
+className="field" 
+placeholder="your instagram" 
+required 
+/>
+
+<input 
+name="phone" 
+className="field" 
+placeholder="your number" 
+required 
+/>
+
+<button className="cta">
+unlock full access
+</button>
 </form>
 </>
 )}
@@ -323,6 +481,33 @@ you’re in. we’ll contact you soon.
 </>
 )}
 
+</div>
+)}
+
+{isSubmitted && (
+<div className="success-popup-overlay">
+<div className="success-popup">
+
+<div className="success-icon">✓</div>
+
+<h2>
+thank you for your registration.
+</h2>
+
+<p>
+your request has been received successfully.
+<br /><br />
+if selected, you may receive a message from us soon with further details about upcoming events and experiences.
+</p>
+
+<button 
+className="popup-button"
+onClick={() => setIsSubmitted(false)}
+>
+continue
+</button>
+
+</div>
 </div>
 )}
 
