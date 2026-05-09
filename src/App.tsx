@@ -175,6 +175,22 @@ line-height:1.1;
 margin:0;
 }
 
+.field-group {
+width:100%;
+text-align:left;
+margin-top:10px;
+}
+
+.field-label {
+display:block;
+margin-bottom:8px;
+font-size:13px;
+font-weight:600;
+opacity:.75;
+padding-left:4px;
+letter-spacing:.3px;
+}
+
 .field {
 width:100%;
 padding:14px;
@@ -182,11 +198,11 @@ border-radius:14px;
 border:1px solid rgba(255,255,255,0.15);
 background:rgba(255,255,255,0.03);
 color:white;
-margin-top:8px;
 outline:none;
 font-size:15px;
 box-sizing:border-box;
 transition:.25s;
+font-family:'Inter',sans-serif;
 }
 
 .field:focus {
@@ -208,7 +224,7 @@ padding:14px;
 border-radius:999px;
 background:white;
 color:black;
-margin-top:14px;
+margin-top:18px;
 cursor:pointer;
 transition:.3s;
 border:none;
@@ -358,20 +374,38 @@ transform:scale(1) translateY(0);
 <p className="quote">not everyone finds the clique</p>
 
 <form onSubmit={handleSubmit} style={{width:"100%"}}>
+
+<div className="field-group">
+<label className="field-label">
+YOUR NAME
+</label>
+
 <input 
 name="name" 
 className="field" 
-placeholder="your name" 
+placeholder="enter your full name" 
 required 
 />
+</div>
+
+<div className="field-group">
+<label className="field-label">
+YOUR EMAIL
+</label>
 
 <input 
 name="email" 
 type="email" 
 className="field" 
-placeholder="your email" 
+placeholder="enter your email" 
 required 
 />
+</div>
+
+<div className="field-group">
+<label className="field-label">
+YOUR DATE OF BIRTH
+</label>
 
 <input 
 name="birthdate" 
@@ -379,20 +413,27 @@ type="date"
 className="field" 
 required 
 />
+</div>
+
+<div className="field-group">
+<label className="field-label">
+YOUR INSTAGRAM
+</label>
 
 <input 
 name="instagram" 
 className="field" 
-placeholder="your instagram" 
+placeholder="@yourusername" 
 required 
 />
+</div>
 
 <button className="cta">
 {isSubmitting ? "sending..." : "join the clique"}
 </button>
 </form>
 
-<div style={{width:"100%"}}>
+<div style={{width:"100%", marginTop:"10px"}}>
 <p className="subtle">already part of clique?</p>
 
 <input
@@ -437,33 +478,58 @@ you’ve attended 5 events — we appreciate your trust.
 </p>
 
 <form onSubmit={handleVIPSubmit} style={{width:"100%"}}>
+
+<div className="field-group">
+<label className="field-label">
+YOUR NAME
+</label>
+
 <input 
 name="name" 
 className="field" 
-placeholder="your name" 
+placeholder="enter your full name" 
 required 
 />
+</div>
+
+<div className="field-group">
+<label className="field-label">
+YOUR EMAIL
+</label>
 
 <input 
 name="email" 
 className="field" 
-placeholder="your email" 
+placeholder="enter your email" 
 required 
 />
+</div>
+
+<div className="field-group">
+<label className="field-label">
+YOUR INSTAGRAM
+</label>
 
 <input 
 name="instagram" 
 className="field" 
-placeholder="your instagram" 
+placeholder="@yourusername" 
 required 
 />
+</div>
+
+<div className="field-group">
+<label className="field-label">
+YOUR NUMBER
+</label>
 
 <input 
 name="phone" 
 className="field" 
-placeholder="your number" 
+placeholder="enter your number" 
 required 
 />
+</div>
 
 <button className="cta">
 unlock full access
@@ -495,9 +561,9 @@ thank you for your registration.
 </h2>
 
 <p>
-your request has been received successfully.
+your registration has been received successfully.
 <br /><br />
-if selected, you may receive a message from us soon with further details about upcoming events and experiences.
+if selected, you may receive a message from us soon regarding upcoming events, experiences and exclusive invitations.
 </p>
 
 <button 
