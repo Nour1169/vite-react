@@ -45,7 +45,6 @@ body: formData,
 });
 
 const data = await res.json();
-console.log("WEB3 RESPONSE:", data);
 
 if (data.success) {
 setIsSubmitted(true);
@@ -214,8 +213,46 @@ background:rgba(255,255,255,0.05);
 color:rgba(255,255,255,0.45);
 }
 
+.birthdate-wrapper {
+position:relative;
+width:100%;
+}
+
+.birthdate-placeholder {
+position:absolute;
+left:14px;
+top:50%;
+transform:translateY(-50%);
+font-size:15px;
+opacity:0.45;
+pointer-events:none;
+font-family:'Inter',sans-serif;
+z-index:1;
+transition:.2s;
+}
+
+.birthdate-field {
+position:relative;
+z-index:2;
+background:transparent;
+}
+
+.birthdate-field:focus + .birthdate-placeholder,
+.birthdate-field:valid + .birthdate-placeholder {
+opacity:0;
+}
+
 input[type="date"] {
 color-scheme:dark;
+}
+
+input[type="date"]::-webkit-datetime-edit {
+color:transparent;
+}
+
+input[type="date"]:focus::-webkit-datetime-edit,
+input[type="date"]:valid::-webkit-datetime-edit {
+color:white;
 }
 
 .cta {
@@ -407,12 +444,20 @@ required
 YOUR DATE OF BIRTH
 </label>
 
+<div className="birthdate-wrapper">
+
 <input 
 name="birthdate" 
 type="date"
-className="field" 
+className="field birthdate-field" 
 required 
 />
+
+<span className="birthdate-placeholder">
+enter your birthdate
+</span>
+
+</div>
 </div>
 
 <div className="field-group">
@@ -431,6 +476,7 @@ required
 <button className="cta">
 {isSubmitting ? "sending..." : "join the clique"}
 </button>
+
 </form>
 
 <div style={{width:"100%", marginTop:"10px"}}>
@@ -479,61 +525,38 @@ you’ve attended 5 events — we appreciate your trust.
 
 <form onSubmit={handleVIPSubmit} style={{width:"100%"}}>
 
-<div className="field-group">
-<label className="field-label">
-YOUR NAME
-</label>
-
 <input 
 name="name" 
 className="field" 
-placeholder="enter your full name" 
+placeholder="your name" 
 required 
 />
-</div>
-
-<div className="field-group">
-<label className="field-label">
-YOUR EMAIL
-</label>
 
 <input 
 name="email" 
 className="field" 
-placeholder="enter your email" 
+placeholder="your email" 
 required 
 />
-</div>
-
-<div className="field-group">
-<label className="field-label">
-YOUR INSTAGRAM
-</label>
 
 <input 
 name="instagram" 
 className="field" 
-placeholder="@yourusername" 
+placeholder="your instagram" 
 required 
 />
-</div>
-
-<div className="field-group">
-<label className="field-label">
-YOUR NUMBER
-</label>
 
 <input 
 name="phone" 
 className="field" 
-placeholder="enter your number" 
+placeholder="your number" 
 required 
 />
-</div>
 
 <button className="cta">
 unlock full access
 </button>
+
 </form>
 </>
 )}
