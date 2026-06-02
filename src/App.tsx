@@ -3,22 +3,11 @@ import logo from "./assets/pff.png";
 
 export default function App() {
 
-const [stage, setStage] = useState<"hidden" | "quote" | "form" | "unlock">("hidden");
+const [stage, setStage] = useState<"hidden" | "quote" | "form">("hidden");
 const [isSubmitting, setIsSubmitting] = useState(false);
 const [isSubmitted, setIsSubmitted] = useState(false);
 
-const [inputCode, setInputCode] = useState("");
-const [progressStage, setProgressStage] = useState<number | null>(null);
 
-const [vipSubmitted, setVipSubmitted] = useState(false);
-
-const codes: Record<string, number> = {
-  "K7M2": 1,
-  "X9Q4": 2,
-  "L3T8": 3,
-  "P8R1": 4,
-  "V2N7": 5,
-};
 
 useEffect(() => {
 if (stage === "quote") {
@@ -26,64 +15,41 @@ setTimeout(() => setStage("form"), 1100);
 }
 }, [stage]);
 
+
 const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
-e.preventDefault();
-setIsSubmitting(true);
+  e.preventDefault();
+  setIsSubmitting(true);
 
-const form = e.currentTarget;
-const formData = new FormData(form);
+  const form = e.currentTarget;
+  const formData = new FormData(form);
 
-formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
-formData.append("subject", "New Clique signup");
-formData.append("from_name", "Clique Website");
-formData.append("replyto", formData.get("email") as string);
+  formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
+  formData.append("subject", "New Clique signup");
+  formData.append("from_name", "Clique Website");
+  formData.append("replyto", formData.get("email") as string);
 
-try {
-const res = await fetch("https://api.web3forms.com/submit", {
-method: "POST",
-body: formData,
-});
+  try {
+    const res = await fetch("https://api.web3forms.com/submit", {
+      method: "POST",
+      body: formData,
+    });
 
-const data = await res.json();
+    const data = await res.json();
 
-if (data.success) {
-setIsSubmitted(true);
-form.reset();
-} else {
-alert(data.message || "Something went wrong");
-}
+    if (data.success) {
+      setIsSubmitted(true);
+      form.reset();
+    } else {
+      alert(data.message || "Something went wrong");
+    }
+  } catch (err) {
+    console.error(err);
+    alert("Network error");
+  }
 
-} catch (err) {
-console.error(err);
-alert("Network error");
-}
-
-setIsSubmitting(false);
+  setIsSubmitting(false);
 };
 
-const handleVIPSubmit = async (e: FormEvent<HTMLFormElement>) => {
-e.preventDefault();
-
-const formData = new FormData(e.currentTarget);
-
-formData.append("access_key", "a12099ca-d298-46b6-84cb-4a3f52aea946");
-formData.append("subject", "🔥 Clique VIP unlocked (5 events)");
-
-await fetch("https://api.web3forms.com/submit", {
-method: "POST",
-body: formData,
-});
-
-setVipSubmitted(true);
-};
-
-const handleUnlock = () => {
-const code = inputCode.toUpperCase();
-const stageFound = codes[code];
-
-setProgressStage(stageFound || null);
-setStage("unlock");
-};
 
 return (
 <>
@@ -479,96 +445,11 @@ required
 
 </form>
 
-<div style={{width:"100%", marginTop:"10px"}}>
-<p className="subtle">already part of clique?</p>
-
-<input
-className="field"
-placeholder="enter your code"
-value={inputCode}
-onChange={(e)=>setInputCode(e.target.value)}
-/>
-
-<button className="cta" onClick={handleUnlock}>
-unlock
-</button>
-</div>
 </>
 )}
 
-{stage === "unlock" && progressStage && (
-<>
-<p className="quote">
-stage {progressStage} unlocked
-</p>
 
-<p className="subtle">
-{progressStage < 5
-? "you’re officially part of the clique."
-: "you’ve been with us from the start."}
-</p>
 
-<div className="progress">
-{[1,2,3,4,5].map(i => (
-<div 
-key={i} 
-className={`dot ${i <= progressStage ? "active" : ""}`}
-/>
-))}
-</div>
-
-{progressStage >= 5 && !vipSubmitted && (
-<>
-<p style={{marginTop:10}}>
-you’ve attended 5 events — we appreciate your trust.
-</p>
-
-<form onSubmit={handleVIPSubmit} style={{width:"100%"}}>
-
-<input 
-name="name" 
-className="field" 
-placeholder="your name" 
-required 
-/>
-
-<input 
-name="email" 
-className="field" 
-placeholder="your email" 
-required 
-/>
-
-<input 
-name="instagram" 
-className="field" 
-placeholder="your instagram" 
-required 
-/>
-
-<input 
-name="phone" 
-className="field" 
-placeholder="your number" 
-required 
-/>
-
-<button className="cta">
-unlock full access
-</button>
-
-</form>
-</>
-)}
-
-{vipSubmitted && (
-<p style={{marginTop:10}}>
-you’re in. we’ll contact you soon.
-</p>
-)}
-
-</>
-)}
 
 </div>
 )}
