@@ -371,10 +371,22 @@ transform:scale(1) translateY(0);
 {stage === "quote" && (
 <p className="quote">so... you found us</p>
 )}
-
 {stage === "form" && (
 <>
 <p className="quote">not everyone finds the clique</p>
+
+<p
+  style={{
+    marginTop: "-8px",
+    marginBottom: "10px",
+    opacity: 0.55,
+    fontSize: "14px",
+    letterSpacing: "2px",
+    textTransform: "uppercase",
+  }}
+>
+  Social Run — 13 June
+</p>
 
 <form onSubmit={handleSubmit} style={{width:"100%"}}>
 
