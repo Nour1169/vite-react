@@ -11,12 +11,14 @@ const events = [
     date: "16 OCTOBER 2026",
     title: "GAME NIGHT",
     location: "NŌA · ANTWERP",
+    isOpen: true,
   },
   {
     id: "nike-run",
     date: "17 OCTOBER 2026",
     title: "SOCIAL RUN × NIKE",
     location: "ANTWERP",
+    isOpen: false,
   },
 ] as const;
 
@@ -47,7 +49,7 @@ export default function App() {
   ) => {
     e.preventDefault();
 
-    if (!activeEvent || isSubmitting) return;
+    if (!activeEvent || !activeEvent.isOpen || isSubmitting) return;
 
     setIsSubmitting(true);
     setError("");
@@ -236,6 +238,25 @@ export default function App() {
         .event-option:hover {
           border-color: rgba(255,255,255,.6);
           background: rgba(255,255,255,.06);
+        }
+
+        .event-option:disabled {
+          opacity: .38;
+          cursor: not-allowed;
+          border-color: rgba(255,255,255,.12);
+        }
+
+        .event-option:disabled:hover {
+          background: rgba(255,255,255,.025);
+          border-color: rgba(255,255,255,.12);
+        }
+
+        .coming-soon {
+          font-size: 10px;
+          letter-spacing: 1.5px;
+          font-weight: 600;
+          color: #fff;
+          margin-top: 4px;
         }
 
         .event-option.selected {
@@ -530,6 +551,7 @@ export default function App() {
                     <button
                       type="button"
                       key={event.id}
+                      disabled={!event.isOpen}
                       aria-pressed={
                         selectedEvent === event.id
                       }
@@ -540,7 +562,7 @@ export default function App() {
                           : "")
                       }
                       onClick={() =>
-                        setSelectedEvent(event.id)
+                        event.isOpen && setSelectedEvent(event.id)
                       }
                     >
                       <div className="event-info">
@@ -555,9 +577,16 @@ export default function App() {
                         <span className="event-location">
                           {event.location}
                         </span>
+                        {!event.isOpen && (
+                          <span className="coming-soon">COMING SOON</span>
+                        )}
                       </div>
 
-                      <span className="event-radio" />
+                      {event.isOpen ? (
+                        <span className="event-radio" />
+                      ) : (
+                        <span aria-label="Registrations not yet open" style={{fontSize: "21px"}}>🔒</span>
+                      )}
                     </button>
                   ))}
                 </div>
@@ -565,7 +594,7 @@ export default function App() {
                 <button
                   type="button"
                   className="cta"
-                  disabled={!selectedEvent}
+                  disabled={!activeEvent?.isOpen}
                   onClick={() => setStage("form")}
                 >
                   continue →
