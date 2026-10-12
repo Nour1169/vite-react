@@ -1,4 +1,3 @@
-
 import { useEffect, useState, type FormEvent } from "react";
 import logo from "./assets/pff.png";
 
@@ -18,7 +17,7 @@ const events = [
     date: "17 OCTOBER 2026",
     title: "SOCIAL RUN × NIKE",
     location: "ANTWERP",
-    isOpen: false,
+    isOpen: true,
   },
 ] as const;
 
@@ -233,6 +232,33 @@ export default function App() {
           gap: 12px;
           transition: .25s ease;
           font-family: 'Inter', sans-serif;
+        }
+
+        /* Nike registrations are now open: subtle launch glow */
+        .event-option.nike-unlocked {
+          border-color: rgba(255,255,255,.65);
+          animation: nikeUnlockGlow 2.4s ease-in-out 3;
+        }
+
+        .event-option.nike-unlocked:hover,
+        .event-option.nike-unlocked:focus-visible {
+          border-color: #fff;
+          box-shadow: 0 0 18px rgba(255,255,255,.22), 0 0 38px rgba(255,255,255,.1);
+        }
+
+        @keyframes nikeUnlockGlow {
+          0%, 100% {
+            box-shadow: 0 0 0 rgba(255,255,255,0);
+            border-color: rgba(255,255,255,.25);
+          }
+          50% {
+            box-shadow: 0 0 18px rgba(255,255,255,.32), 0 0 42px rgba(255,255,255,.12);
+            border-color: rgba(255,255,255,.95);
+          }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+          .event-option.nike-unlocked { animation: none; }
         }
 
         .event-option:hover {
@@ -559,7 +585,8 @@ export default function App() {
                         "event-option " +
                         (selectedEvent === event.id
                           ? "selected"
-                          : "")
+                          : "") +
+                        (event.id === "nike-run" ? " nike-unlocked" : "")
                       }
                       onClick={() =>
                         event.isOpen && setSelectedEvent(event.id)
