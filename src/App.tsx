@@ -10,7 +10,7 @@ const events = [
     date: "16 OCTOBER 2026",
     title: "GAME NIGHT",
     location: "NŌA · ANTWERP",
-    isOpen: true,
+    isOpen: false,
   },
   {
     id: "nike-run",
@@ -605,14 +605,14 @@ export default function App() {
                           {event.location}
                         </span>
                         {!event.isOpen && (
-                          <span className="coming-soon">COMING SOON</span>
+                          <span className="coming-soon">SOLD OUT</span>
                         )}
                       </div>
 
                       {event.isOpen ? (
                         <span className="event-radio" />
                       ) : (
-                        <span aria-label="Registrations not yet open" style={{fontSize: "21px"}}>🔒</span>
+                        <span aria-label="Registrations closed" style={{fontSize: "21px"}}>🔒</span>
                       )}
                     </button>
                   ))}
