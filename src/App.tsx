@@ -1,22 +1,16 @@
+
 import { useEffect, useState, type FormEvent } from "react";
 import logo from "./assets/pff.png";
 
 type Stage = "hidden" | "quote" | "events" | "form";
-type EventId = "game-night" | "nike-run";
+type EventId = "david-lloyd-run";
 
 const events = [
   {
-    id: "game-night",
-    date: "16 OCTOBER 2026",
-    title: "GAME NIGHT",
-    location: "NŌA · ANTWERP",
-    isOpen: false,
-  },
-  {
-    id: "nike-run",
-    date: "17 OCTOBER 2026",
-    title: "SOCIAL RUN × NIKE",
-    location: "ANTWERP",
+    id: "david-lloyd-run",
+    date: "25 OCTOBER 2026",
+    title: "SOCIAL RUN × DAVID LLOYD",
+    location: "DAVID LLOYD · EDEGEM",
     isOpen: true,
   },
 ] as const;
@@ -234,7 +228,7 @@ export default function App() {
           font-family: 'Inter', sans-serif;
         }
 
-        /* Nike registrations are now open: subtle launch glow */
+        /* Original animation styles retained */
         .event-option.nike-unlocked {
           border-color: rgba(255,255,255,.65);
           animation: nikeUnlockGlow 2.4s ease-in-out 3;
@@ -567,7 +561,7 @@ export default function App() {
                 </p>
 
                 <p className="subtitle">
-                  two dates. two experiences.
+                  one date. one experience.
                   <br />
                   one clique.
                 </p>
@@ -586,7 +580,7 @@ export default function App() {
                         (selectedEvent === event.id
                           ? "selected"
                           : "") +
-                        (event.id === "nike-run" ? " nike-unlocked" : "")
+                        ""
                       }
                       onClick={() =>
                         event.isOpen && setSelectedEvent(event.id)
@@ -604,15 +598,23 @@ export default function App() {
                         <span className="event-location">
                           {event.location}
                         </span>
+
                         {!event.isOpen && (
-                          <span className="coming-soon">SOLD OUT</span>
+                          <span className="coming-soon">
+                            SOLD OUT
+                          </span>
                         )}
                       </div>
 
                       {event.isOpen ? (
                         <span className="event-radio" />
                       ) : (
-                        <span aria-label="Registrations closed" style={{fontSize: "21px"}}>🔒</span>
+                        <span
+                          aria-label="Registrations closed"
+                          style={{ fontSize: "21px" }}
+                        >
+                          🔒
+                        </span>
                       )}
                     </button>
                   ))}
