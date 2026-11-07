@@ -1,3 +1,4 @@
+
 import { useEffect, useState, type FormEvent } from 'react';
 import './App.css';
 
@@ -15,13 +16,13 @@ const archiveEvents: ArchiveEvent[] = [
   {
     title: 'BROOKS × CLIQUE',
     category: 'SOCIAL RUN',
-    image: '/images/brooks.jpeg',
+    image: '/images/brooks.jpg',
     description: 'An unforgettable running experience.'
   },
   {
     title: 'THE CLIQUE HUNT',
     category: 'STADSFEESTZAAL',
-    image: '/images/stadsfeestzaal.jpeg',
+    image: '/images/stadsfeestzaal.jpg',
     description: 'Challenges, community and €1,000 in prizes.'
   }
 ];
@@ -60,6 +61,7 @@ export default function App() {
     event.preventDefault();
     setStatus('Registration is not connected yet.No information was sent.');
   }
+
   return (
     <>
       <nav className="nav">
@@ -81,7 +83,7 @@ export default function App() {
         </section>
 
         <section className="hero" id="hero">
-          <img className="hero-img" src="/images/brooks.jpeg" alt="CLIQUE social running community" />
+          <img className="hero-img" src="/images/brooks.jpg" alt="CLIQUE social running community" />
           <div className="hero-content">
             <div className="eyebrow">ANTWERP / BELGIUM — SOCIAL COMMUNITY</div>
             <h1>NOT JUST A<br />COMMUNITY.<br /><em>A MOVEMENT.</em></h1>
@@ -109,7 +111,8 @@ export default function App() {
           </div>
           <img className="story-image" src="/images/nike-group.jpeg" alt="CLIQUE community at Nike" loading="lazy" />
         </section>
-         <section className="section cream" id="events">
+
+        <section className="section cream" id="events">
           <div className="section-label">02 / OUR ARCHIVE</div>
           <h2 className="reveal">SELECTED<br />EXPERIENCES.</h2>
           <div className="events" id="eventsGrid">
@@ -139,7 +142,7 @@ export default function App() {
           <h2 className="reveal">A CITY.<br />A CHALLENGE.<br />A COMMUNITY.</h2>
           <p>Our Clique Hunt transformed Antwerp&apos;s iconic Stadsfeestzaal into an interactive experience with challenges, surprises and €1,000 in prizes.</p>
           <p>A moment that brought our community together in a completely different way.</p>
-          <img src="/images/stadsfeestzaal.jpeg" alt="CLIQUE Hunt at Stadsfeestzaal Antwerp" loading="lazy" />
+          <img src="/images/stadsfeestzaal.jpg" alt="CLIQUE Hunt at Stadsfeestzaal Antwerp" loading="lazy" />
           <div className="press-bottom">CLIQUE IN THE PRESS / HET LAATSTE NIEUWS</div>
         </section>
 
