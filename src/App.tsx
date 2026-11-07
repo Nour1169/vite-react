@@ -94,7 +94,7 @@ export default function App() {
         <div className="ticker" aria-hidden="true">
           <div className="ticker-inner">
             {[0, 1].map((i) => (
-              <span key={i}>YOU&apos;RE ONE CLIQUE AWAY ✳ MORE THAN A RUN ✳ THIS IS ONLY THE BEGINNING ✳</span>
+              <span key={i}>YOU&apos;RE ONE CLIQUE AWAY  MORE THAN A RUN  THIS IS ONLY THE BEGINNING </span>
             ))}
           </div>
         </div>
@@ -109,7 +109,7 @@ export default function App() {
             <p>We&apos;re not just about running. Not just about events. We&apos;re about the people you meet, the connections you make and the moments that stay with you.</p>
             <p><strong style={{ color: 'white' }}>And we&apos;re only getting started.</strong></p>
           </div>
-          <img className="story-image" src="/images/nike-group.jpeg" alt="CLIQUE community at Nike" loading="lazy" />
+          
         </section>
 
         <section className="section cream" id="events">
