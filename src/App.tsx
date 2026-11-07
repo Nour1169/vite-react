@@ -160,3 +160,13 @@ export default function App() {
           </form>
         </section>
       </main>
+
+      <footer className="footer">
+        <div>
+          THIS IS ONLY<br />
+          THE BEGINNING.
+        </div>
+      </footer>
+    </>
+  );
+}
