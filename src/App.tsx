@@ -94,7 +94,7 @@ export default function App() {
         <div className="ticker" aria-hidden="true">
           <div className="ticker-inner">
             {[0, 1].map((i) => (
-              <span key={i}>YOU&apos;RE ONE CLIQUE AWAY  MORE THAN A RUN  THIS IS ONLY THE BEGINNING </span>
+              <span key={i}>YOU&apos;RE ONE CLIQUE AWAY / MORE THAN A RUN / THIS IS ONLY THE BEGINNING </span>
             ))}
           </div>
         </div>
