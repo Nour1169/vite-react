@@ -4,15 +4,28 @@ import './App.css';
 type ArchiveEvent = { title: string; category: string; image: string; description: string };
 type AvailableEvent = { id: string; name: string; available: boolean };
 
+
 const archiveEvents: ArchiveEvent[] = [
-  { title: 'NIKE × CLIQUE', category: 'SOCIAL RUN', image: '/images/nike-group.jpeg', description: 'Movement, community and new connections.' },
-  { title: 'BROOKS × CLIQUE', category: 'SOCIAL RUN', image: '/images/brooks.jpeg', description: 'An unforgettable running experience.' },
-  { title: 'THE CLIQUE HUNT', category: 'STADSFEESTZAAL', image: '/images/stadsfeestzaal.jpeg', description: 'Challenges, community and €1,000 in prizes.' },
-  { title: 'GARRINCHA × CLIQUE', category: 'PADEL EXPERIENCE', image: '/images/garrincha.jpeg', description: 'Sport, competition and community.' },
-  { title: 'TANGIER RUN CLUB × CLIQUE', category: 'INTERNATIONAL EXPERIENCE', image: '/images/tangier.jpeg', description: 'Two countries. One big community.' },
-  { title: "DOK'N DINE × CLIQUE", category: 'CREATIVE EXPERIENCE', image: '/images/dokndine.jpeg', description: 'Bringing people together beyond the ordinary.' },
-  { title: 'CLIQUE COMMUNITY CULTURE', category: 'MUSIC & EXPERIENCES', image: '/images/dj.jpeg', description: 'More than a run. More than an event.' },
+  {
+    title: 'NIKE × CLIQUE',
+    category: 'SOCIAL RUN',
+    image: '/images/nike-group.jpeg',
+    description: 'Movement, community and new connections.'
+  },
+  {
+    title: 'BROOKS × CLIQUE',
+    category: 'SOCIAL RUN',
+    image: '/images/brooks.jpeg',
+    description: 'An unforgettable running experience.'
+  },
+  {
+    title: 'THE CLIQUE HUNT',
+    category: 'STADSFEESTZAAL',
+    image: '/images/stadsfeestzaal.jpeg',
+    description: 'Challenges, community and €1,000 in prizes.'
+  }
 ];
+
 
 const partners = ['NIKE', 'BROOKS', 'DAVID LLOYD', 'RED BULL', 'META', 'OAKLEY', 'RAY-BAN', 'GARRINCHA'];
 
